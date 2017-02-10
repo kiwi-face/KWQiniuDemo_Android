@@ -15,7 +15,7 @@ Kiwi人脸跟踪及特效（贴纸、美颜、滤镜、哈哈镜）在七牛SDK�
 
 ## 三. 开发指南
 
- [Wiki](https://github.com/kiwi-face/KWQiniuDemo_Android/wiki)                                                                                                                                                                                                                         
+ [Wiki](https://github.com/kiwi-face/KWQiniuDemo_Android/blob/master/docs/android-dev-instruction.md)                                                                                                                                                                                                                         
 
 ## 四. 反馈与建议
 
