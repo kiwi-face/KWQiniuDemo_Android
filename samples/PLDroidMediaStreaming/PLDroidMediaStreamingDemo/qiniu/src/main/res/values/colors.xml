@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pldroid_streaming_white">#fff</color>
+    <color name="pldroid_streaming_red">#f00</color>
+    <color name="pldroid_streaming_yellow">#FFFF00</color>
+    <color name="item_bg">#e0e4e7</color>
+    <color name="dullGreen">#4CAf50</color>
+    <color name="dullYellow">#eedd00</color>
+    <color name="transWhite">#20FFFFFF</color>
+</resources>

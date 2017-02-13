@@ -1,0 +1,13 @@
+{
+    "itemList":[
+                {"type":1,"facePos":3,"scaleWidthOffset":2,"scaleHeightOffset":0,"scaleXOffset":0.0,"scaleYOffset":-1.2,"alignPos":0,"alignX":0,"alignY":0,"frameFolder":"F_ear","frameNum":43,"frameDuration":100,"frameWidth":260,"frameHeight":147,"trigerType":0},
+                
+                {"type":1,"facePos":2,"scaleWidthOffset":-0.3,"scaleHeightOffset":0,"scaleXOffset":0.0,"scaleYOffset":0.3,"alignPos":0,"alignX":0,"alignY":0,"frameFolder":"F_nose","frameNum":1,"frameDuration":100,"frameWidth":120,"frameHeight":90,"trigerType":0},
+                
+                {"type":1,"facePos":9,"scaleWidthOffset":2,"scaleHeightOffset":1,"scaleXOffset":0.0,"scaleYOffset":1,"alignPos":0,"alignX":0,"alignY":0,"frameFolder":"F_carrot","frameNum":43,"frameDuration":100,"frameWidth":260,"frameHeight":285,"trigerType":0},
+                
+                {"type":1,"facePos":2,"scaleWidthOffset":0.6,"scaleHeightOffset":0,"scaleXOffset":0.0,"scaleYOffset":0.0,"alignPos":0,"alignX":0,"alignY":0,"frameFolder":"F_cheek","frameNum":1,"frameDuration":100,"frameWidth":175,"frameHeight":201,"trigerType":0},
+                
+                {"type":1,"facePos":6,"scaleWidthOffset":0.1,"scaleHightOffset":0,"scaleXOffset":0.0,"scaleYOffset":0,"alignPos":0,"alignX":0,"alignY":0,"frameFolder":"F_teeth","frameNum":1,"frameDuration":100,"frameWidth":90,"frameHeight":61,"trigerType":0}
+                ]
+}

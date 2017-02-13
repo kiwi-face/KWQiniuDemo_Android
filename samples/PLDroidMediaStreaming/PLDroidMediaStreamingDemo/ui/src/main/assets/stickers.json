@@ -1,0 +1,164 @@
+{
+  "stickers": [
+    {
+      "name": "flower_deer",
+      "dir": "flower_deer",
+      "category": "default",
+      "thumb": "flower_deer_icon.png",
+      "voiced": false,
+      "downloaded": true
+    },
+    {
+      "name": "white_cat",
+      "dir": "white_cat",
+      "category": "default",
+      "thumb": "white_cat_icon.png",
+      "voiced": false,
+      "downloaded": true
+    },
+    {
+      "name": "tuzichiluobo",
+      "dir": "tuzichiluobo",
+      "category": "default",
+      "thumb": "tuzichiluobo_icon.png",
+      "voiced": false,
+      "downloaded": true
+    },
+    {
+      "name": "gouweibacaodouhuli",
+      "dir": "gouweibacaodouhuli",
+      "category": "default",
+      "thumb": "gouweibacaodouhuli_icon.png",
+      "voiced": false,
+      "downloaded": true
+    },
+    {
+      "name": "kaolachiye",
+      "dir": "kaolachiye",
+      "category": "default",
+      "thumb": "kaolachiye_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "honglianmao",
+      "dir": "honglianmao",
+      "category": "default",
+      "thumb": "honglianmao_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "danjingdaoshi",
+      "dir": "danjingdaoshi",
+      "category": "default",
+      "thumb": "danjingdaoshi_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "black_eye",
+      "dir": "black_eye",
+      "category": "default",
+      "thumb": "black_eye_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "black_cat",
+      "dir": "black_cat",
+      "category": "default",
+      "thumb": "black_cat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "black_hat",
+      "dir": "black_hat",
+      "category": "default",
+      "thumb": "black_hat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "cat_faka",
+      "dir": "cat_faka",
+      "category": "default",
+      "thumb": "cat_faka_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "crown",
+      "dir": "crown",
+      "category": "default",
+      "thumb": "crown_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "deer_flower",
+      "dir": "deer_flower",
+      "category": "default",
+      "thumb": "deer_flower_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "ghosts",
+      "dir": "ghosts",
+      "category": "default",
+      "thumb": "ghosts_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "light_blue_rabbit",
+      "dir": "light_blue_rabbit",
+      "category": "default",
+      "thumb": "light_blue_rabbit_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "light_rabbit",
+      "dir": "light_rabbit",
+      "category": "default",
+      "thumb": "light_rabbit_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "pink_cat",
+      "dir": "pink_cat",
+      "category": "default",
+      "thumb": "pink_cat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rabbit_hat",
+      "dir": "rabbit_hat",
+      "category": "default",
+      "thumb": "rabbit_hat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "small_black_cat",
+      "dir": "small_black_cat",
+      "category": "default",
+      "thumb": "small_black_cat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "wedding_dress",
+      "dir": "wedding_dress",
+      "category": "default",
+      "thumb": "wedding_dress_icon.png",
+      "voiced": false,
+      "downloaded": false
+    }
+  ]
+}
