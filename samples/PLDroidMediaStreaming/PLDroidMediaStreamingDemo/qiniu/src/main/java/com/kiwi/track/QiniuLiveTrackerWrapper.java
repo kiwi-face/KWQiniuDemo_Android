@@ -115,7 +115,8 @@ public class QiniuLiveTrackerWrapper {
 //        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0);
 
         int newTexId = texId;
-        int filterTexId = kwTrackerManager.onDrawOESTexture(texId, texWidth, texHeight,2);
+        int maxFaceCount = 1;
+        int filterTexId = kwTrackerManager.onDrawOESTexture(texId, texWidth, texHeight,maxFaceCount);
         if (filterTexId != -1) {
             newTexId = filterTexId;
         }
