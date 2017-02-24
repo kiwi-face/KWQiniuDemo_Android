@@ -66,26 +66,26 @@ kiwi人脸跟踪SDK，主要功能包括：
 
 2.   在自己项目的build.gradle中引入aar包
 
-                        ```
-                        repositories {
-                          flatDir {
-                              dirs '../libs'
-                          }
-                        }
-                       
-                        dependencies {
-                          compile(name: 'kw-filter', ext: 'aar')
-                          compile(name: 'kw-tracker', ext: 'aar')
-                        }
-                         ```
+                            ```
+                            repositories {
+                              flatDir {
+                                  dirs '../libs'
+                              }
+                            }
+                           
+                            dependencies {
+                              compile(name: 'kw-filter', ext: 'aar')
+                              compile(name: 'kw-tracker', ext: 'aar')
+                            }
+                             ```
 
 3.   将sdk文件夹中的assets文件复制到自己项目的相应文件夹下
 
-      ![](images/assets.png)
+          ![](images/assets.png)
 
 4.   将sdk文件夹中的jniLibs文件复制到自己项目的相应文件夹下
 
-     ![](images/jniLibs.png)
+         ![](images/jniLibs.png)
 
 5.   为保证sdk正常运行，程序部署时需在AndroidManisfest.xml文件中加入以下许可：
 
@@ -236,6 +236,13 @@ kiwi人脸跟踪SDK，主要功能包括：
             getKwTrackerManager().switchDistortion(filterType);
 
         }
+      //赠送礼物
+      //giftSticker  礼物贴纸
+      //播放次数
+       @Override
+       public void onGiveGift(StickerConfig giftSticker) {
+           getKwTrackerManager().switchGift(giftSticker, 1);
+        }
 
         @Override
         public void onAdjustFaceBeauty(int type, float param) {
@@ -248,6 +255,22 @@ kiwi人脸跟踪SDK，主要功能包括：
                 case KwControlView.BEAUTY_THIN_FACE_TYPE:
                     getKwTrackerManager().adjustFaceThinFaceScale(param);
                     break;
+                case SKIN_SHINNING_TENDERNESS:
+                        //粉嫩
+                      getKwTrackerManager().adjustSkinShinningTenderness(param);
+                      break;
+                 case SKIN_TONE_SATURATION:
+                        //饱和
+                      getKwTrackerManager().adjustSkinToneSaturation(param);
+                      break;
+                 case REMOVE_BLEMISHES:
+                        //磨皮
+                      getKwTrackerManager().adjustRemoveBlemishes(param);
+                      break;
+                case SKIN_TONE_PERFECTION:
+                        //美白
+                      getKwTrackerManager().adjustSkinTonePerfection(param);
+                      break;
             }
 
         }
@@ -298,9 +321,13 @@ kiwi人脸跟踪SDK，主要功能包括：
 
 - Leaks是什么？如何关闭
 
-- 七牛直播本地预览有效果，观众端没效果--加上
+- 七牛直播本地预览有效果，观众端没效果
 
-  一：界面卡顿怎么办？
+- KW_Track过大
+
+- 大眼、廋脸可变参数是多少？
+
+  一：1）界面卡顿怎么办？
 
   ​    可以打开性能优先模式，目前配置的是oppo和vivo，还可以自己配置指定的系统版本以及其他手机
 
@@ -311,6 +338,14 @@ kiwi人脸跟踪SDK，主要功能包括：
               Config.TRACK_MODE = Config.TRACK_PRIORITY_PERFORMANCE;
      }
   ```
+
+     2）so包问题
+
+  ```java
+  只使用armeabi下的so包会导致界面卡顿，建议加上armeabi-v7a 和x86下面的so包
+  ```
+
+  ​       
 
   二：track 返回-1
 
@@ -363,7 +398,31 @@ Leaks是用于检查内存泄漏的，而且只在debug包下才会生成，rele
                          .setCameraSourceImproved(true)
 ```
 
+八：KW_Track过大
 
+```java
+/**
+ * model路径，支持用户网络下载KW_Track.bin，放在此目录下
+ *
+ * @param context
+ * @return model路径
+ */
+public static String getModelPath(Context context) {
+    String path = null;
+    File dataDir = context.getApplicationContext().getExternalFilesDir("");
+    if (dataDir != null) {
+        path = dataDir.getAbsolutePath() + File.separator + models;
+    }
+    return path;
+}
+```
+
+九：大眼瘦脸参数多少
+
+```java
+大眼指定可变最小值：0.05；大眼指定可变最大值：0.3；大眼指定初始值：0.10；
+瘦脸指定可变最小值：0.90；瘦脸指定可变最大值：1.00；瘦脸指定初始值：1.90 - 0.97;
+```
 
 
 
