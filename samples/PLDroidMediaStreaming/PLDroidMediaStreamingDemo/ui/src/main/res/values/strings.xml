@@ -70,6 +70,9 @@
     <string name="happy">HAPPY</string>
     <string name="misty">MISTY</string>
     <string name="spring">SPRING</string>
+    <string name="cold">COLD</string>
+    <string name="frog">FROG</string>
+    <string name="kd100">KD100</string>
     <string name="harvest">HARVEST</string>
     <string name="open">open</string>
     <string name="cancel">cancel</string>

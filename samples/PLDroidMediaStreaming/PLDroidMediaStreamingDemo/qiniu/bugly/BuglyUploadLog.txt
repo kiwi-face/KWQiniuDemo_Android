@@ -19,11 +19,3 @@ appChannel=qiniu
 appPackage=com.qiniu.pili.droid.streaming.demo
 appVersion=2.1.1-2-3
 
-file=/Users/shijian/work/android/trackerAndroidDemoGithub/effect/build/outputs/mapping/release/mapping.txt
-sha1=c97653d22985e2b369db0fce289491dcd5b03f40
-appId=32c53e1250
-
-file=/Users/shijian/work/android/trackerAndroidDemoGithub/qiniu/build/outputs/mapping/release/mapping.txt
-sha1=365775a3535a73724881f05e026498dfe03dd2f9
-appId=32c53e1250
-

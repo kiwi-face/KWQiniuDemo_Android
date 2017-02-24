@@ -6,7 +6,8 @@
       "category": "default",
       "thumb": "flower_deer_icon.png",
       "voiced": false,
-      "downloaded": true
+      "downloaded": true,
+      "sourceType": 0
     },
     {
       "name": "white_cat",
@@ -14,7 +15,8 @@
       "category": "default",
       "thumb": "white_cat_icon.png",
       "voiced": false,
-      "downloaded": true
+      "downloaded": true,
+      "sourceType": 0
     },
     {
       "name": "tuzichiluobo",
@@ -22,7 +24,8 @@
       "category": "default",
       "thumb": "tuzichiluobo_icon.png",
       "voiced": false,
-      "downloaded": true
+      "downloaded": true,
+      "sourceType": 0
     },
     {
       "name": "gouweibacaodouhuli",
@@ -30,7 +33,8 @@
       "category": "default",
       "thumb": "gouweibacaodouhuli_icon.png",
       "voiced": false,
-      "downloaded": true
+      "downloaded": true,
+      "sourceType": 0
     },
     {
       "name": "kaolachiye",
@@ -38,7 +42,8 @@
       "category": "default",
       "thumb": "kaolachiye_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "honglianmao",
@@ -46,7 +51,8 @@
       "category": "default",
       "thumb": "honglianmao_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "danjingdaoshi",
@@ -54,7 +60,8 @@
       "category": "default",
       "thumb": "danjingdaoshi_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "black_eye",
@@ -62,7 +69,8 @@
       "category": "default",
       "thumb": "black_eye_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "black_cat",
@@ -70,7 +78,8 @@
       "category": "default",
       "thumb": "black_cat_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "black_hat",
@@ -78,7 +87,8 @@
       "category": "default",
       "thumb": "black_hat_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "cat_faka",
@@ -86,7 +96,8 @@
       "category": "default",
       "thumb": "cat_faka_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "crown",
@@ -94,7 +105,8 @@
       "category": "default",
       "thumb": "crown_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "deer_flower",
@@ -102,7 +114,8 @@
       "category": "default",
       "thumb": "deer_flower_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "ghosts",
@@ -110,7 +123,8 @@
       "category": "default",
       "thumb": "ghosts_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "light_blue_rabbit",
@@ -118,7 +132,8 @@
       "category": "default",
       "thumb": "light_blue_rabbit_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "light_rabbit",
@@ -126,7 +141,8 @@
       "category": "default",
       "thumb": "light_rabbit_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "pink_cat",
@@ -134,7 +150,8 @@
       "category": "default",
       "thumb": "pink_cat_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "rabbit_hat",
@@ -142,7 +159,8 @@
       "category": "default",
       "thumb": "rabbit_hat_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "small_black_cat",
@@ -150,7 +168,8 @@
       "category": "default",
       "thumb": "small_black_cat_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     },
     {
       "name": "wedding_dress",
@@ -158,7 +177,8 @@
       "category": "default",
       "thumb": "wedding_dress_icon.png",
       "voiced": false,
-      "downloaded": false
+      "downloaded": false,
+      "sourceType": 0
     }
   ]
 }

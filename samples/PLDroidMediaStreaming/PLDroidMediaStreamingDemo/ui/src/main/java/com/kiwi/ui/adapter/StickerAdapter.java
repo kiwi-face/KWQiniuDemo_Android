@@ -140,8 +140,8 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
      * Here is the key method to apply the animation
      */
     private void setAnimation(View viewToAnimate) {
-            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.loading_animation);
-            viewToAnimate.startAnimation(animation);
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.loading_animation);
+        viewToAnimate.startAnimation(animation);
     }
 
     private void stopAnimation(final View viewToAnimate) {
@@ -223,11 +223,22 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
     }
 
 
+    /**
+     * SourceType  默认为0
+     *
+     * @param sticker
+     * @return
+     */
     private String getRealDownloadUrl(StickerConfig sticker) {
-        String downloadUrl = sticker.getDownloadUrl(Config.getStickerUrl());
-        return auth.privateDownloadUrl(downloadUrl);
+        if (null == sticker.getSourceType() || "0".equals(sticker.getSourceType())) {
+            String downloadUrl = sticker.getDownloadUrl(Config.getStickerUrl());
+            return auth.privateDownloadUrl(downloadUrl);
+        } else {
+            //可以使用自己的贴纸下载url
+            String userUrl = "";
+            return userUrl + sticker.getDir() + ".zip";
+        }
     }
-
 
 
     //判断是否有网络
@@ -274,7 +285,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
     private class StickerItemClickListener implements View.OnClickListener {
         private final StickerConfig item;
         private final int position;
-        private  final Handler handler = new UIHandler();
+        private final Handler handler = new UIHandler();
 
         public StickerItemClickListener(StickerConfig item, int position) {
             this.item = item;
@@ -294,7 +305,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
                 return;
             }
 
-            if(isLoading(item)) {
+            if (isLoading(item)) {
                 return;
             }
 
@@ -304,7 +315,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
                 return;
             }
 
-            startDownloadTicket(item, handler,position);
+            startDownloadTicket(item, handler, position);
         }
 
         private class UIHandler extends Handler {

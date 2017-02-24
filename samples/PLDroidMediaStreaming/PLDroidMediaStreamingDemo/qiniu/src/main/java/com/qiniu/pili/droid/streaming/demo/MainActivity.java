@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Activity {
-    public static final String PUSH_URL = "rtmp://pili-publish.imsobrr.com/sobrr-live/android_push?e=1481623921&token=kqOw7G_w4cf5-X-_9lA_8zK7KVs7WUXrsVA7H5wM:OaHPFOZkc_SYeFZN7b04KtkBZU4=";
+    public static final String PUSH_URL = "rtmp://pili-publish.imsobrr.com/sobrr-live/android_test?e=1487069134&token=kqOw7G_w4cf5-X-_9lA_8zK7KVs7WUXrsVA7H5wM:ex1LARqWQS0QU1MsIz1rtr6Nzvo=";
     private static final String TAG = "MainActivity";
     private static final String url = "Your app server url which get StreamJson";
     private static final String url2 = "Your app server url which get PublishUrl";
@@ -107,6 +107,9 @@ public class MainActivity extends Activity {
         }
         if (!addPermission(permissionsList, Manifest.permission.RECORD_AUDIO)) {
             permissionsNeeded.add("MICROPHONE");
+        }
+        if (!addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE)) {
+            permissionsNeeded.add("Read phone state");
         }
         if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             permissionsNeeded.add("Write external storage");

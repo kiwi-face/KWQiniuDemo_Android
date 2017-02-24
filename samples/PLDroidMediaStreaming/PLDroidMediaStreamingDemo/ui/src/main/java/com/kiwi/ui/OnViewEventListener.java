@@ -34,5 +34,9 @@ public interface OnViewEventListener {
 
     List<StickerConfig> getStickers();
 
+    List<StickerConfig> getGiftStickers();
+
     void writeSticker(StickerConfig stickerConfig);
+
+    void onGiveGift(StickerConfig giftSticker);
 }

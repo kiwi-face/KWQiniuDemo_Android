@@ -28,6 +28,19 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/gift_giving"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/iconliwu" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
         android:id="@+id/layout_empty"
         android:layout_width="match_parent"
         android:layout_height="0dp"

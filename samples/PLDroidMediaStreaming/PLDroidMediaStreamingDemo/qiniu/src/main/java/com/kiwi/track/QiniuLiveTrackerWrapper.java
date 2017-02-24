@@ -66,7 +66,7 @@ public class QiniuLiveTrackerWrapper {
         }
 
         //关闭日志打印,release版本请务必关闭日志打印
-        Config.isDebug = false;
+        Config.isDebug = true;
     }
 
 
@@ -116,7 +116,7 @@ public class QiniuLiveTrackerWrapper {
 
         int newTexId = texId;
         int maxFaceCount = 1;
-        int filterTexId = kwTrackerManager.onDrawOESTexture(texId, texWidth, texHeight,maxFaceCount);
+        int filterTexId = kwTrackerManager.onDrawOESTexture(texId, texWidth, texHeight, maxFaceCount);
         if (filterTexId != -1) {
             newTexId = filterTexId;
         }
@@ -192,7 +192,15 @@ public class QiniuLiveTrackerWrapper {
                 getKwTrackerManager().adjustBeauty(level);
             }
 
+            @Override
+            public void onGiveGift(StickerConfig giftSticker) {
+                getKwTrackerManager().switchGift(giftSticker, 1);
+            }
 
+            @Override
+            public List<StickerConfig> getGiftStickers() {
+                return getKwTrackerManager().getGiftStickerMgr().getStickerConfigs();
+            }
 
             @Override
             public void onAdjustFaceBeauty(int type, float param) {

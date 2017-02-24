@@ -66,7 +66,12 @@ public class FilterTypeHelper {
             case HARVEST:
             case MISTY:
             case SPRING:
+            case COLD:
+            case FROG:
+            case KD100:
                 return R.color.filter_color_brown_dark;
+
+
             default:
                 return R.color.filter_color_grey_light;
         }
@@ -88,6 +93,13 @@ public class FilterTypeHelper {
                 return R.drawable.misty_icon;
             case SPRING:
                 return R.drawable.spring_icon;
+
+            case COLD:
+                return R.drawable.cold_icon;
+            case FROG:
+                return R.drawable.frog_icon;
+            case KD100:
+                return R.drawable.kd100_icon;
 
 
             case NONE:
@@ -215,7 +227,12 @@ public class FilterTypeHelper {
                 return R.string.misty;
             case SPRING:
                 return R.string.spring;
-
+            case COLD:
+                return R.string.cold;
+            case FROG:
+                return R.string.frog;
+            case KD100:
+                return R.string.kd100;
 
             case NONE:
                 return R.string.filter_none;

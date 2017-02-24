@@ -1,0 +1,12 @@
+{
+  "stickers": [
+    {
+      "name": "lovegift",
+      "dir": "lovegift",
+      "category": "default",
+      "thumb": "lovegift_icon.png",
+      "voiced": false,
+      "downloaded": true
+    }
+  ]
+}
