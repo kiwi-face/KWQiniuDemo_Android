@@ -1,76 +1,52 @@
 {
   "stickers": [
     {
-      "name": "flower_deer",
-      "dir": "flower_deer",
+      "name": "glasses_space",
+      "dir": "glasses_space",
       "category": "default",
-      "thumb": "flower_deer_icon.png",
+      "thumb": "glasses_space_icon.png",
       "voiced": false,
-      "downloaded": true,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "white_cat",
-      "dir": "white_cat",
+      "name": "evil",
+      "dir": "evil",
       "category": "default",
-      "thumb": "white_cat_icon.png",
+      "thumb": "evil_icon.png",
       "voiced": false,
-      "downloaded": true,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "tuzichiluobo",
-      "dir": "tuzichiluobo",
+      "name": "easy_bear",
+      "dir": "easy_bear",
       "category": "default",
-      "thumb": "tuzichiluobo_icon.png",
+      "thumb": "easy_bear_icon.png",
       "voiced": false,
-      "downloaded": true,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "gouweibacaodouhuli",
-      "dir": "gouweibacaodouhuli",
+      "name": "colourful_blinder",
+      "dir": "colourful_blinder",
       "category": "default",
-      "thumb": "gouweibacaodouhuli_icon.png",
+      "thumb": "colourful_blinder_icon.png",
       "voiced": false,
-      "downloaded": true,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "kaolachiye",
-      "dir": "kaolachiye",
+      "name": "cat_face",
+      "dir": "cat_face",
       "category": "default",
-      "thumb": "kaolachiye_icon.png",
+      "thumb": "cat_face_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "honglianmao",
-      "dir": "honglianmao",
+      "name": "carry_book",
+      "dir": "carry_book",
       "category": "default",
-      "thumb": "honglianmao_icon.png",
+      "thumb": "carry_book_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
-    },
-    {
-      "name": "danjingdaoshi",
-      "dir": "danjingdaoshi",
-      "category": "default",
-      "thumb": "danjingdaoshi_icon.png",
-      "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
-    },
-    {
-      "name": "black_eye",
-      "dir": "black_eye",
-      "category": "default",
-      "thumb": "black_eye_icon.png",
-      "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
       "name": "black_cat",
@@ -78,89 +54,95 @@
       "category": "default",
       "thumb": "black_cat_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "black_hat",
-      "dir": "black_hat",
+      "name": "bear_with_glass_on_the_hair",
+      "dir": "bear_with_glass_on_the_hair",
       "category": "default",
-      "thumb": "black_hat_icon.png",
+      "thumb": "bear_with_glass_on_the_hair_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "cat_faka",
-      "dir": "cat_faka",
+      "name": "hipop",
+      "dir": "hipop",
       "category": "default",
-      "thumb": "cat_faka_icon.png",
+      "thumb": "hipop_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "crown",
-      "dir": "crown",
+      "name": "wizard",
+      "dir": "wizard",
       "category": "default",
-      "thumb": "crown_icon.png",
+      "thumb": "wizard_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "deer_flower",
-      "dir": "deer_flower",
+      "name": "unicorn",
+      "dir": "unicorn",
       "category": "default",
-      "thumb": "deer_flower_icon.png",
+      "thumb": "unicorn_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "ghosts",
-      "dir": "ghosts",
+      "name": "under_water_glasses",
+      "dir": "under_water_glasses",
       "category": "default",
-      "thumb": "ghosts_icon.png",
+      "thumb": "under_water_glasses_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "light_blue_rabbit",
-      "dir": "light_blue_rabbit",
+      "name": "toy_dog",
+      "dir": "toy_dog",
       "category": "default",
-      "thumb": "light_blue_rabbit_icon.png",
+      "thumb": "toy_dog_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "light_rabbit",
-      "dir": "light_rabbit",
+      "name": "tuzi",
+      "dir": "tuzi",
       "category": "default",
-      "thumb": "light_rabbit_icon.png",
+      "thumb": "tuzi_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "pink_cat",
-      "dir": "pink_cat",
+      "name": "toy_cat",
+      "dir": "toy_cat",
       "category": "default",
-      "thumb": "pink_cat_icon.png",
+      "thumb": "toy_cat_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "rabbit_hat",
-      "dir": "rabbit_hat",
+      "name": "TATATA",
+      "dir": "TATATA",
       "category": "default",
-      "thumb": "rabbit_hat_icon.png",
+      "thumb": "TATATA_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
+    },
+    {
+      "name": "stars",
+      "dir": "stars",
+      "category": "default",
+      "thumb": "stars_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "star_glasses",
+      "dir": "star_glasses",
+      "category": "default",
+      "thumb": "star_glasses_icon.png",
+      "voiced": false,
+      "downloaded": false
     },
     {
       "name": "small_black_cat",
@@ -168,17 +150,431 @@
       "category": "default",
       "thumb": "small_black_cat_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
     },
     {
-      "name": "wedding_dress",
-      "dir": "wedding_dress",
+      "name": "skeleton_hat",
+      "dir": "skeleton_hat",
       "category": "default",
-      "thumb": "wedding_dress_icon.png",
+      "thumb": "skeleton_hat_icon.png",
       "voiced": false,
-      "downloaded": false,
-      "sourceType": 0
+      "downloaded": false
+    },
+    {
+      "name": "sheep",
+      "dir": "sheep",
+      "category": "default",
+      "thumb": "sheep_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rainbowl_from_mout",
+      "dir": "rainbowl_from_mout",
+      "category": "default",
+      "thumb": "rainbowl_from_mout_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rabbit_hat",
+      "dir": "rabbit_hat",
+      "category": "default",
+      "thumb": "rabbit_hat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rabbit_hair",
+      "dir": "rabbit_hair",
+      "category": "default",
+      "thumb": "rabbit_hair_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rabbit_face",
+      "dir": "rabbit_face",
+      "category": "default",
+      "thumb": "rabbit_face_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "star_boom",
+      "dir": "star_boom",
+      "category": "default",
+      "thumb": "star_boom_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "queen",
+      "dir": "queen",
+      "category": "default",
+      "thumb": "queen_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "my_glove",
+      "dir": "my_glove",
+      "category": "default",
+      "thumb": "my_glove_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "pink_scarf",
+      "dir": "pink_scarf",
+      "category": "default",
+      "thumb": "pink_scarf_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "qilvle",
+      "dir": "qilvle",
+      "category": "default",
+      "thumb": "qilvle_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "kinderhat",
+      "dir": "kinderhat",
+      "category": "default",
+      "thumb": "kinderhat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "little_angel",
+      "dir": "little_angel",
+      "category": "default",
+      "thumb": "little_angel_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "light_rabbit",
+      "dir": "light_rabbit",
+      "category": "default",
+      "thumb": "light_rabbit_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "kitty",
+      "dir": "kitty",
+      "category": "default",
+      "thumb": "kitty_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "lady_hat",
+      "dir": "lady_hat",
+      "category": "default",
+      "thumb": "lady_hat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "lolly_sugar",
+      "dir": "lolly_sugar",
+      "category": "default",
+      "thumb": "lolly_sugar_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "Mona_Lisa",
+      "dir": "Mona_Lisa",
+      "category": "default",
+      "thumb": "Mona_Lisa_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "imagination",
+      "dir": "imagination",
+      "category": "default",
+      "thumb": "imagination_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "hugwith_lady",
+      "dir": "hugwith_lady",
+      "category": "default",
+      "thumb": "hugwith_lady_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "hunsha",
+      "dir": "hunsha",
+      "category": "default",
+      "thumb": "hunsha_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "littleeat_fish",
+      "dir": "littleeat_fish",
+      "category": "default",
+      "thumb": "littleeat_fish_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "little_squirrel",
+      "dir": "little_squirrel",
+      "category": "default",
+      "thumb": "little_squirrel_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "heartfrom_mouth",
+      "dir": "heartfrom_mouth",
+      "category": "default",
+      "thumb": "heartfrom_mouth_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "glass_on_the_hair",
+      "dir": "glass_on_the_hair",
+      "category": "default",
+      "thumb": "glass_on_the_hair_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "for_you",
+      "dir": "for_you",
+      "category": "default",
+      "thumb": "for_you_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "flower",
+      "dir": "flower",
+      "category": "default",
+      "thumb": "flower_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "dog_cover",
+      "dir": "dog_cover",
+      "category": "default",
+      "thumb": "dog_cover_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "clown",
+      "dir": "clown",
+      "category": "default",
+      "thumb": "clown_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "cloak",
+      "dir": "cloak",
+      "category": "default",
+      "thumb": "cloak_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "chiken_mask",
+      "dir": "chiken_mask",
+      "category": "default",
+      "thumb": "chiken_mask_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "chicken",
+      "dir": "chicken",
+      "category": "default",
+      "thumb": "chicken_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "captain",
+      "dir": "captain",
+      "category": "default",
+      "thumb": "captain_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "easy_rabbit",
+      "dir": "easy_rabbit",
+      "category": "default",
+      "thumb": "easy_rabbit_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "candycat",
+      "dir": "candycat",
+      "category": "default",
+      "thumb": "candycat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "butterfly_hairpin",
+      "dir": "butterfly_hairpin",
+      "category": "default",
+      "thumb": "butterfly_hairpin_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "butterfly_from_mouth",
+      "dir": "butterfly_from_mouth",
+      "category": "default",
+      "thumb": "butterfly_from_mouth_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "big_beard",
+      "dir": "big_beard",
+      "category": "default",
+      "thumb": "big_beard_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "bee",
+      "dir": "bee",
+      "category": "default",
+      "thumb": "bee_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "beard",
+      "dir": "beard",
+      "category": "default",
+      "thumb": "beard_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "headband",
+      "dir": "headband",
+      "category": "default",
+      "thumb": "headband_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "wedding",
+      "dir": "wedding",
+      "category": "default",
+      "thumb": "wedding_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "viking",
+      "dir": "viking",
+      "category": "default",
+      "thumb": "viking_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "xiake",
+      "dir": "xiake",
+      "category": "default",
+      "thumb": "xiake_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "angel",
+      "dir": "angel",
+      "category": "default",
+      "thumb": "angel_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "happy_cat",
+      "dir": "happy_cat",
+      "category": "default",
+      "thumb": "happy_cat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "flower_girl",
+      "dir": "flower_girl",
+      "category": "default",
+      "thumb": "flower_girl_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "femal_indian",
+      "dir": "femal_indian",
+      "category": "default",
+      "thumb": "femal_indian_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "eyes_big",
+      "dir": "eyes_big",
+      "category": "default",
+      "thumb": "eyes_big_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "easy_cat",
+      "dir": "easy_cat",
+      "category": "default",
+      "thumb": "easy_cat_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "crown_shining",
+      "dir": "crown_shining",
+      "category": "default",
+      "thumb": "crown_shining_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "cotton_candy",
+      "dir": "cotton_candy",
+      "category": "default",
+      "thumb": "cotton_candy_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "colo_hat",
+      "dir": "colo_hat",
+      "category": "default",
+      "thumb": "colo_hat_icon.png",
+      "voiced": false,
+      "downloaded": false
     }
   ]
 }
