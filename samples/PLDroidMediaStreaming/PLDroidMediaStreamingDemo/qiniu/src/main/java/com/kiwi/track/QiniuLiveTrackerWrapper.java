@@ -41,7 +41,8 @@ public class QiniuLiveTrackerWrapper {
     public QiniuLiveTrackerWrapper(Context context, int cameraFaceId) {
 
         kwTrackerSetting = new KwTrackerSettings().
-                setBeautyEnabled(true).
+                setBeauty2Enabled(true).
+                setBeautySettings2(new KwTrackerSettings.BeautySettings2(0.7f, 0.365f, 0.20f, 0.12f)).
                 setCameraFaceId(cameraFaceId);
 
         kwTrackerManager = new KwTrackerManager(context).

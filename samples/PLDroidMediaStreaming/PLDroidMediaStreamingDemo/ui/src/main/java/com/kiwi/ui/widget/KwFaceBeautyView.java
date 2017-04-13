@@ -83,6 +83,8 @@ public class KwFaceBeautyView extends FrameLayout implements View.OnClickListene
     public void onClick(View v) {
 
         if (v.getId() == R.id.switch_image) {
+            setBeauty2ViewClose();
+            onEventListener.onSwitchBeauty(false);
             setImageResource(mControl);
         }
 

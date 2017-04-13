@@ -1,362 +1,178 @@
 {
   "stickers": [
     {
-      "name": "glasses_space",
-      "dir": "glasses_space",
+      "name": "baixiaomaohuxu",
+      "dir": "baixiaomaohuxu",
       "category": "default",
-      "thumb": "glasses_space_icon.png",
+      "thumb": "baixiaomaohuxu_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "evil",
-      "dir": "evil",
+      "name": "bear_eat_fish",
+      "dir": "bear_eat_fish",
       "category": "default",
-      "thumb": "evil_icon.png",
+      "thumb": "bear_eat_fish_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "easy_bear",
-      "dir": "easy_bear",
+      "name": "bear_headgear",
+      "dir": "bear_headgear",
       "category": "default",
-      "thumb": "easy_bear_icon.png",
+      "thumb": "bear_headgear_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "colourful_blinder",
-      "dir": "colourful_blinder",
+      "name": "big_eyes",
+      "dir": "big_eyes",
       "category": "default",
-      "thumb": "colourful_blinder_icon.png",
+      "thumb": "big_eyes_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "cat_face",
-      "dir": "cat_face",
+      "name": "birthday",
+      "dir": "birthday",
       "category": "default",
-      "thumb": "cat_face_icon.png",
+      "thumb": "birthday_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "carry_book",
-      "dir": "carry_book",
+      "name": "buliaoxiaomao",
+      "dir": "buliaoxiaomao",
       "category": "default",
-      "thumb": "carry_book_icon.png",
+      "thumb": "buliaoxiaomao_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "black_cat",
-      "dir": "black_cat",
+      "name": "cat_claw",
+      "dir": "cat_claw",
       "category": "default",
-      "thumb": "black_cat_icon.png",
+      "thumb": "cat_claw_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "bear_with_glass_on_the_hair",
-      "dir": "bear_with_glass_on_the_hair",
+      "name": "cat_fa_qia",
+      "dir": "cat_fa_qia",
       "category": "default",
-      "thumb": "bear_with_glass_on_the_hair_icon.png",
+      "thumb": "cat_fa_qia_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "hipop",
-      "dir": "hipop",
+      "name": "cat_on_the_head",
+      "dir": "cat_on_the_head",
       "category": "default",
-      "thumb": "hipop_icon.png",
+      "thumb": "cat_on_the_head_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "wizard",
-      "dir": "wizard",
+      "name": "cidinmaozi",
+      "dir": "cidinmaozi",
       "category": "default",
-      "thumb": "wizard_icon.png",
+      "thumb": "cidinmaozi_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "unicorn",
-      "dir": "unicorn",
+      "name": "cream_cake",
+      "dir": "cream_cake",
       "category": "default",
-      "thumb": "unicorn_icon.png",
+      "thumb": "cream_cake_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "under_water_glasses",
-      "dir": "under_water_glasses",
+      "name": "cut_hair",
+      "dir": "cut_hair",
       "category": "default",
-      "thumb": "under_water_glasses_icon.png",
+      "thumb": "cut_hair_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "toy_dog",
-      "dir": "toy_dog",
+      "name": "cute_cat",
+      "dir": "cute_cat",
       "category": "default",
-      "thumb": "toy_dog_icon.png",
+      "thumb": "cute_cat_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "tuzi",
-      "dir": "tuzi",
+      "name": "dahudiejie",
+      "dir": "dahudiejie",
       "category": "default",
-      "thumb": "tuzi_icon.png",
+      "thumb": "dahudiejie_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "toy_cat",
-      "dir": "toy_cat",
+      "name": "damengyanjing",
+      "dir": "damengyanjing",
       "category": "default",
-      "thumb": "toy_cat_icon.png",
+      "thumb": "damengyanjing_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "TATATA",
-      "dir": "TATATA",
+      "name": "dayuanerduo",
+      "dir": "dayuanerduo",
       "category": "default",
-      "thumb": "TATATA_icon.png",
+      "thumb": "dayuanerduo_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "stars",
-      "dir": "stars",
+      "name": "dog_tongue",
+      "dir": "dog_tongue",
       "category": "default",
-      "thumb": "stars_icon.png",
+      "thumb": "dog_tongue_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "star_glasses",
-      "dir": "star_glasses",
+      "name": "duboji",
+      "dir": "duboji",
       "category": "default",
-      "thumb": "star_glasses_icon.png",
+      "thumb": "duboji_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "small_black_cat",
-      "dir": "small_black_cat",
+      "name": "fannao",
+      "dir": "fannao",
       "category": "default",
-      "thumb": "small_black_cat_icon.png",
+      "thumb": "fannao_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "skeleton_hat",
-      "dir": "skeleton_hat",
+      "name": "fashion_laddy",
+      "dir": "fashion_laddy",
       "category": "default",
-      "thumb": "skeleton_hat_icon.png",
+      "thumb": "fashion_laddy_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "sheep",
-      "dir": "sheep",
+      "name": "feidie",
+      "dir": "feidie",
       "category": "default",
-      "thumb": "sheep_icon.png",
+      "thumb": "feidie_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "rainbowl_from_mout",
-      "dir": "rainbowl_from_mout",
+      "name": "fengying",
+      "dir": "fengying",
       "category": "default",
-      "thumb": "rainbowl_from_mout_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "rabbit_hat",
-      "dir": "rabbit_hat",
-      "category": "default",
-      "thumb": "rabbit_hat_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "rabbit_hair",
-      "dir": "rabbit_hair",
-      "category": "default",
-      "thumb": "rabbit_hair_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "rabbit_face",
-      "dir": "rabbit_face",
-      "category": "default",
-      "thumb": "rabbit_face_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "star_boom",
-      "dir": "star_boom",
-      "category": "default",
-      "thumb": "star_boom_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "queen",
-      "dir": "queen",
-      "category": "default",
-      "thumb": "queen_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "my_glove",
-      "dir": "my_glove",
-      "category": "default",
-      "thumb": "my_glove_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "pink_scarf",
-      "dir": "pink_scarf",
-      "category": "default",
-      "thumb": "pink_scarf_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "qilvle",
-      "dir": "qilvle",
-      "category": "default",
-      "thumb": "qilvle_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "kinderhat",
-      "dir": "kinderhat",
-      "category": "default",
-      "thumb": "kinderhat_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "little_angel",
-      "dir": "little_angel",
-      "category": "default",
-      "thumb": "little_angel_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "light_rabbit",
-      "dir": "light_rabbit",
-      "category": "default",
-      "thumb": "light_rabbit_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "kitty",
-      "dir": "kitty",
-      "category": "default",
-      "thumb": "kitty_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "lady_hat",
-      "dir": "lady_hat",
-      "category": "default",
-      "thumb": "lady_hat_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "lolly_sugar",
-      "dir": "lolly_sugar",
-      "category": "default",
-      "thumb": "lolly_sugar_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "Mona_Lisa",
-      "dir": "Mona_Lisa",
-      "category": "default",
-      "thumb": "Mona_Lisa_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "imagination",
-      "dir": "imagination",
-      "category": "default",
-      "thumb": "imagination_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "hugwith_lady",
-      "dir": "hugwith_lady",
-      "category": "default",
-      "thumb": "hugwith_lady_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "hunsha",
-      "dir": "hunsha",
-      "category": "default",
-      "thumb": "hunsha_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "littleeat_fish",
-      "dir": "littleeat_fish",
-      "category": "default",
-      "thumb": "littleeat_fish_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "little_squirrel",
-      "dir": "little_squirrel",
-      "category": "default",
-      "thumb": "little_squirrel_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "heartfrom_mouth",
-      "dir": "heartfrom_mouth",
-      "category": "default",
-      "thumb": "heartfrom_mouth_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "glass_on_the_hair",
-      "dir": "glass_on_the_hair",
-      "category": "default",
-      "thumb": "glass_on_the_hair_icon.png",
-      "voiced": false,
-      "downloaded": false
-    },
-    {
-      "name": "for_you",
-      "dir": "for_you",
-      "category": "default",
-      "thumb": "for_you_icon.png",
+      "thumb": "fengying_icon.png",
       "voiced": false,
       "downloaded": false
     },
@@ -369,210 +185,354 @@
       "downloaded": false
     },
     {
-      "name": "dog_cover",
-      "dir": "dog_cover",
+      "name": "Gentleman_hat",
+      "dir": "Gentleman_hat",
       "category": "default",
-      "thumb": "dog_cover_icon.png",
+      "thumb": "Gentleman_hat_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "clown",
-      "dir": "clown",
+      "name": "glasses_space",
+      "dir": "glasses_space",
       "category": "default",
-      "thumb": "clown_icon.png",
+      "thumb": "glasses_space_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "cloak",
-      "dir": "cloak",
+      "name": "goux",
+      "dir": "goux",
       "category": "default",
-      "thumb": "cloak_icon.png",
+      "thumb": "goux_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "chiken_mask",
-      "dir": "chiken_mask",
+      "name": "hdj",
+      "dir": "hdj",
       "category": "default",
-      "thumb": "chiken_mask_icon.png",
+      "thumb": "hdj_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "chicken",
-      "dir": "chicken",
+      "name": "heart_explode",
+      "dir": "heart_explode",
       "category": "default",
-      "thumb": "chicken_icon.png",
+      "thumb": "heart_explode_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "captain",
-      "dir": "captain",
+      "name": "hello_baby",
+      "dir": "hello_baby",
       "category": "default",
-      "thumb": "captain_icon.png",
+      "thumb": "hello_baby_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "easy_rabbit",
-      "dir": "easy_rabbit",
+      "name": "hello_glasses",
+      "dir": "hello_glasses",
       "category": "default",
-      "thumb": "easy_rabbit_icon.png",
+      "thumb": "hello_glasses_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "candycat",
-      "dir": "candycat",
+      "name": "hongtoushi",
+      "dir": "hongtoushi",
       "category": "default",
-      "thumb": "candycat_icon.png",
+      "thumb": "hongtoushi_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "butterfly_hairpin",
-      "dir": "butterfly_hairpin",
+      "name": "huangm",
+      "dir": "huangm",
       "category": "default",
-      "thumb": "butterfly_hairpin_icon.png",
+      "thumb": "huangm_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "butterfly_from_mouth",
-      "dir": "butterfly_from_mouth",
+      "name": "jianbixiaoheimao",
+      "dir": "jianbixiaoheimao",
       "category": "default",
-      "thumb": "butterfly_from_mouth_icon.png",
+      "thumb": "jianbixiaoheimao_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "big_beard",
-      "dir": "big_beard",
+      "name": "jiandanxiaomaomi",
+      "dir": "jiandanxiaomaomi",
       "category": "default",
-      "thumb": "big_beard_icon.png",
+      "thumb": "jiandanxiaomaomi_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "bee",
-      "dir": "bee",
+      "name": "jiandanzhuangshi",
+      "dir": "jiandanzhuangshi",
       "category": "default",
-      "thumb": "bee_icon.png",
+      "thumb": "jiandanzhuangshi_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "beard",
-      "dir": "beard",
+      "name": "kitty",
+      "dir": "kitty",
       "category": "default",
-      "thumb": "beard_icon.png",
+      "thumb": "kitty_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "headband",
-      "dir": "headband",
+      "name": "laser",
+      "dir": "laser",
       "category": "default",
-      "thumb": "headband_icon.png",
+      "thumb": "laser_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "wedding",
-      "dir": "wedding",
+      "name": "laugh",
+      "dir": "laugh",
       "category": "default",
-      "thumb": "wedding_icon.png",
+      "thumb": "laugh_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "viking",
-      "dir": "viking",
+      "name": "lecher",
+      "dir": "lecher",
       "category": "default",
-      "thumb": "viking_icon.png",
+      "thumb": "lecher_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "xiake",
-      "dir": "xiake",
+      "name": "liangshanaixinmao",
+      "dir": "liangshanaixinmao",
       "category": "default",
-      "thumb": "xiake_icon.png",
+      "thumb": "liangshanaixinmao_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "angel",
-      "dir": "angel",
+      "name": "little_bear",
+      "dir": "little_bear",
       "category": "default",
-      "thumb": "angel_icon.png",
+      "thumb": "little_bear_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "happy_cat",
-      "dir": "happy_cat",
+      "name": "long_ear_dog",
+      "dir": "long_ear_dog",
       "category": "default",
-      "thumb": "happy_cat_icon.png",
+      "thumb": "long_ear_dog_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "flower_girl",
-      "dir": "flower_girl",
+      "name": "long_ear_rabbit",
+      "dir": "long_ear_rabbit",
       "category": "default",
-      "thumb": "flower_girl_icon.png",
+      "thumb": "long_ear_rabbit_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "femal_indian",
-      "dir": "femal_indian",
+      "name": "love_bubbles",
+      "dir": "love_bubbles",
       "category": "default",
-      "thumb": "femal_indian_icon.png",
+      "thumb": "love_bubbles_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "eyes_big",
-      "dir": "eyes_big",
+      "name": "love_gestures",
+      "dir": "love_gestures",
       "category": "default",
-      "thumb": "eyes_big_icon.png",
+      "thumb": "love_gestures_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "easy_cat",
-      "dir": "easy_cat",
+      "name": "maogou",
+      "dir": "maogou",
       "category": "default",
-      "thumb": "easy_cat_icon.png",
+      "thumb": "maogou_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "crown_shining",
-      "dir": "crown_shining",
+      "name": "myqueen",
+      "dir": "myqueen",
       "category": "default",
-      "thumb": "crown_shining_icon.png",
+      "thumb": "myqueen_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "cotton_candy",
-      "dir": "cotton_candy",
+      "name": "noodles",
+      "dir": "noodles",
       "category": "default",
-      "thumb": "cotton_candy_icon.png",
+      "thumb": "noodles_icon.png",
       "voiced": false,
       "downloaded": false
     },
     {
-      "name": "colo_hat",
-      "dir": "colo_hat",
+      "name": "pop_glasses",
+      "dir": "pop_glasses",
       "category": "default",
-      "thumb": "colo_hat_icon.png",
+      "thumb": "pop_glasses_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "prison",
+      "dir": "prison",
+      "category": "default",
+      "thumb": "prison_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "qifei",
+      "dir": "qifei",
+      "category": "default",
+      "thumb": "qifei_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rabbit_blush",
+      "dir": "rabbit_blush",
+      "category": "default",
+      "thumb": "rabbit_blush_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rabbit_face",
+      "dir": "rabbit_face",
+      "category": "default",
+      "thumb": "rabbit_face_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "rabbit_holding_face",
+      "dir": "rabbit_holding_face",
+      "category": "default",
+      "thumb": "rabbit_holding_face_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "red_glasses",
+      "dir": "red_glasses",
+      "category": "default",
+      "thumb": "red_glasses_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "sheep",
+      "dir": "sheep",
+      "category": "default",
+      "thumb": "sheep_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "shizitou",
+      "dir": "shizitou",
+      "category": "default",
+      "thumb": "shizitou_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "sunflower_glasses",
+      "dir": "sunflower_glasses",
+      "category": "default",
+      "thumb": "sunflower_glasses_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "tears",
+      "dir": "tears",
+      "category": "default",
+      "thumb": "tears_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "touhua",
+      "dir": "touhua",
+      "category": "default",
+      "thumb": "touhua_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "toy_dog",
+      "dir": "toy_dog",
+      "category": "default",
+      "thumb": "toy_dog_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "toy_rabbit_ear_tie",
+      "dir": "toy_rabbit_ear_tie",
+      "category": "default",
+      "thumb": "toy_rabbit_ear_tie_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "under_water_glasses",
+      "dir": "under_water_glasses",
+      "category": "default",
+      "thumb": "under_water_glasses_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "uniform2",
+      "dir": "uniform2",
+      "category": "default",
+      "thumb": "uniform2_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "xianzi",
+      "dir": "xianzi",
+      "category": "default",
+      "thumb": "xianzi_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "xingxing",
+      "dir": "xingxing",
+      "category": "default",
+      "thumb": "xingxing_icon.png",
+      "voiced": false,
+      "downloaded": false
+    },
+    {
+      "name": "ygt",
+      "dir": "ygt",
+      "category": "default",
+      "thumb": "ygt_icon.png",
       "voiced": false,
       "downloaded": false
     }
