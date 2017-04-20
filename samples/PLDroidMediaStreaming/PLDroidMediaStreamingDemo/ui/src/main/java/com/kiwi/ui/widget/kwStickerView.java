@@ -12,6 +12,7 @@ import com.kiwi.tracker.bean.conf.StickerConfig;
 import com.kiwi.ui.OnViewEventListener;
 import com.kiwi.ui.R;
 import com.kiwi.ui.adapter.StickerAdapter;
+import com.kiwi.ui.model.StickerConfigMgr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,8 @@ public class kwStickerView extends FrameLayout implements StickerAdapter.ISticke
     private OnViewEventListener onEventListener;
     private StickerAdapter mStickerAdapter;
 
+    private StickerConfigMgr stickerConfigMgr;
+
     public void setOnEventListener(OnViewEventListener onEventListener) {
         this.onEventListener = onEventListener;
     }
@@ -34,6 +37,8 @@ public class kwStickerView extends FrameLayout implements StickerAdapter.ISticke
     public kwStickerView(Context context) {
         super(context);
         init(null, 0);
+
+        this.stickerConfigMgr = new StickerConfigMgr();
     }
 
     public kwStickerView(Context context, AttributeSet attrs) {
@@ -61,12 +66,12 @@ public class kwStickerView extends FrameLayout implements StickerAdapter.ISticke
 
     @Override
     public void writeSticker(StickerConfig stickerConfig) {
-        onEventListener.writeSticker(stickerConfig);
+        this.stickerConfigMgr.writeStickerConfig(stickerConfig);
     }
 
     private List<StickerConfig> getStickers() {
         //获取json文件中的贴纸信息
-        return onEventListener.getStickers();
+        return this.stickerConfigMgr.readStickerConfig().getStickers();
     }
 
 

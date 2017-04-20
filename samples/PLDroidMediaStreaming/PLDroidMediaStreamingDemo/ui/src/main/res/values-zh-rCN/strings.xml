@@ -48,4 +48,7 @@
 	<string name="face_beautify">全局美颜</string>
 	<string name="part_beauty">局部美颜</string>
 	<string name="face_beautify_second">全局美颜2</string>
+	<string name="take_photo">拍照</string>
+	<string name="give_gift">赠送礼物</string>
+	<string name="expresss_sticker">表情贴纸</string>
 </resources>

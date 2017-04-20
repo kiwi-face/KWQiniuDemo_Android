@@ -69,6 +69,14 @@ public class FilterTypeHelper {
             case COLD:
             case FROG:
             case KD100:
+
+            case DARK:
+            case FSFP100CC:
+            case LYON:
+            case M106:
+            case M109:
+            case S114:
+
                 return R.color.filter_color_brown_dark;
 
 
@@ -100,6 +108,19 @@ public class FilterTypeHelper {
                 return R.drawable.frog_icon;
             case KD100:
                 return R.drawable.kd100_icon;
+
+            case DARK:
+                return R.drawable.dark_icon;
+            case FSFP100CC:
+                return R.drawable.fsfp100cc_icon;
+            case LYON:
+                return R.drawable.lyon_icon;
+            case M106:
+                return R.drawable.m106_icon;
+            case M109:
+                return R.drawable.m109_icon;
+            case S114:
+                return R.drawable.s114_icon;
 
 
             case NONE:
@@ -233,6 +254,20 @@ public class FilterTypeHelper {
                 return R.string.frog;
             case KD100:
                 return R.string.kd100;
+
+            case DARK:
+                return R.string.dark;
+            case FSFP100CC:
+                return R.string.fsfp100cc;
+            case LYON:
+                return R.string.lyon;
+            case M106:
+                return R.string.m106;
+            case M109:
+                return R.string.m109;
+            case S114:
+                return R.string.s114;
+
 
             case NONE:
                 return R.string.filter_none;

@@ -56,17 +56,25 @@ public class KwControlViewHelper {
 //            KwFilterType.WALDEN,
 //            KwFilterType.XPROII,
 
-//            KwFilterType.BLUEBERRY,
-            KwFilterType.DREAMY,
-            KwFilterType.HABANA,
+            KwFilterType.BLUEBERRY,
+//            KwFilterType.DREAMY,
+//            KwFilterType.HABANA,
 //            KwFilterType.HAPPY,
-            KwFilterType.HARVEST,
-            KwFilterType.MISTY,
+//            KwFilterType.HARVEST,
+//            KwFilterType.MISTY,
 //            KwFilterType.SPRING,
 
             KwFilterType.COLD,
-            KwFilterType.FROG,
-            KwFilterType.KD100
+//            KwFilterType.FROG,
+            KwFilterType.KD100,
+
+            KwFilterType.DARK,
+            KwFilterType.FSFP100CC,
+            KwFilterType.LYON,
+            KwFilterType.M106,
+            KwFilterType.M109,
+            KwFilterType.S114,
+
     };
 
     public static final KwFilterType[] distortion_types = new KwFilterType[]{

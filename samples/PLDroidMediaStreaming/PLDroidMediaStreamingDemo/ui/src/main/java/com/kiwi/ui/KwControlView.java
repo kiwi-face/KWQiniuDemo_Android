@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -13,14 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.kiwi.tracker.KwFilterType;
-import com.kiwi.tracker.bean.conf.StickerConfig;
+import com.kiwi.tracker.bean.Filter;
 import com.kiwi.ui.adapter.FilterAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.kiwi.ui.KwControlViewHelper.types;
+import com.kiwi.ui.model.FilterConfigMgr;
 
 /**
  * Created by song.ding on 2017/2/3.
@@ -46,10 +40,8 @@ public class KwControlView extends FrameLayout implements View.OnClickListener {
     private RelativeLayout mRlempty;
     private OnViewEventListener onEventListener;
     private TextView mFpsTextView;
-    private FilterAdapter mAdapter;
     private ImageView mSwitchCamera;
     private KwEffectView kwEffectView;
-    private ImageView mGiveGift;
 
     public KwControlView(Context context) {
         super(context);
@@ -91,9 +83,6 @@ public class KwControlView extends FrameLayout implements View.OnClickListener {
         kwEffectView = (KwEffectView) findViewById(R.id.layout_sticker);
         initFilterListView();
 
-        mGiveGift = (ImageView) findViewById(R.id.gift_giving);
-        mGiveGift.setOnClickListener(this);
-
         mFilter.setOnClickListener(this);
         mSticker.setOnClickListener(this);
         mShutter.setOnClickListener(this);
@@ -114,6 +103,15 @@ public class KwControlView extends FrameLayout implements View.OnClickListener {
     public void onClick(View v) {
         /*滤镜*/
         if (v.getId() == R.id.btn_camera_filter) {
+            FilterAdapter mAdapter = new FilterAdapter(getContext(), FilterConfigMgr.getFilters());
+            mFilterListView.setAdapter(mAdapter);
+            mAdapter.setOnFilterChangeListener(new FilterAdapter.onFilterChangeListener() {
+                @Override
+                public void onFilterChanged(Filter filter) {
+                    onEventListener.onSwitchFilter(filter);
+                }
+            });
+
             mToolBarLayout.setVisibility(GONE);
             mFilterLayout.setVisibility(View.VISIBLE);
         }
@@ -140,19 +138,7 @@ public class KwControlView extends FrameLayout implements View.OnClickListener {
             onEventListener.onSwitchCamera();
         }
 
-        if (v.getId() == R.id.gift_giving) {
-            List<StickerConfig> list = new ArrayList<>();
-            list.addAll(getStickers());
-            onEventListener.onGiveGift(list.get(0));
-        }
-
     }
-
-    private List<StickerConfig> getStickers() {
-        //获取json文件中的贴纸信息
-        return onEventListener.getGiftStickers();
-    }
-
 
     public void setOnEventListener(OnViewEventListener onEventListener) {
         this.onEventListener = onEventListener;
@@ -175,14 +161,5 @@ public class KwControlView extends FrameLayout implements View.OnClickListener {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mFilterListView.setLayoutManager(linearLayoutManager);
-        mAdapter = new FilterAdapter(getContext(), types);
-        mFilterListView.setAdapter(mAdapter);
-        mAdapter.setOnFilterChangeListener(new FilterAdapter.onFilterChangeListener() {
-
-            @Override
-            public void onFilterChanged(KwFilterType filterType) {
-                onEventListener.onFilterChanged(filterType);
-            }
-        });
     }
 }

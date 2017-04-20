@@ -73,6 +73,15 @@
     <string name="cold">COLD</string>
     <string name="frog">FROG</string>
     <string name="kd100">KD100</string>
+
+    <string name="dark">DARK</string>
+    <string name="fsfp100cc">FSFP100CC</string>
+    <string name="lyon">LYON</string>
+    <string name="m106">M106</string>
+    <string name="m109">M109</string>
+    <string name="s114">S114</string>
+
+
     <string name="harvest">HARVEST</string>
     <string name="open">open</string>
     <string name="cancel">cancel</string>
@@ -85,4 +94,7 @@
     <string name="face_beautify">face beautify</string>
     <string name="part_beauty">part beauty</string>
     <string name="face_beautify_second">face beautify 2</string>
+    <string name="take_photo">take a photo</string>
+    <string name="give_gift">gift</string>
+    <string name="expresss_sticker">expression</string>
 </resources>

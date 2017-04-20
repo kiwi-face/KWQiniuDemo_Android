@@ -11,11 +11,11 @@ import com.kiwi.tracker.KwFilterType;
 import com.kiwi.tracker.KwTrackerContext;
 import com.kiwi.tracker.KwTrackerManager;
 import com.kiwi.tracker.KwTrackerSettings;
+import com.kiwi.tracker.bean.Filter;
 import com.kiwi.tracker.bean.conf.StickerConfig;
 import com.kiwi.tracker.common.Config;
 import com.kiwi.ui.OnViewEventListener;
-
-import java.util.List;
+import com.kiwi.ui.helper.KwResourceHelper;
 
 import static com.kiwi.tracker.common.Config.isDebug;
 import static com.kiwi.ui.KwControlView.BEAUTY_BIG_EYE_TYPE;
@@ -41,8 +41,7 @@ public class QiniuLiveTrackerWrapper {
     public QiniuLiveTrackerWrapper(Context context, int cameraFaceId) {
 
         kwTrackerSetting = new KwTrackerSettings().
-                setBeauty2Enabled(true).
-                setBeautySettings2(new KwTrackerSettings.BeautySettings2(0.7f, 0.365f, 0.20f, 0.12f)).
+                setBeautyEnabled(true).
                 setCameraFaceId(cameraFaceId);
 
         kwTrackerManager = new KwTrackerManager(context).
@@ -50,6 +49,9 @@ public class QiniuLiveTrackerWrapper {
                 setStickerMgr(new StickerMgr())
                 .setTrackerContext(kwTrackerContext)
                 .build();
+
+        //copy assets config/sticker/filter to sdcard
+        KwResourceHelper.copyResource2SD(context);
 
         initKiwiConfig();
     }
@@ -67,7 +69,7 @@ public class QiniuLiveTrackerWrapper {
         }
 
         //关闭日志打印,release版本请务必关闭日志打印
-        Config.isDebug = true;
+        Config.isDebug = false;
     }
 
 
@@ -157,15 +159,17 @@ public class QiniuLiveTrackerWrapper {
                 switchCamearRunnable.run();
             }
 
+
             @Override
-            public void onFilterChanged(KwFilterType filterType) {
-                getKwTrackerManager().switchFilter(filterType);
+            public void onSwitchFilter(Filter filter) {
+                getKwTrackerManager().switchFilter(filter);
             }
 
             @Override
             public void onStickerChanged(StickerConfig item) {
                 getKwTrackerManager().switchSticker(item);
             }
+
 
             @Override
             public void onSwitchBeauty(boolean enable) {
@@ -178,11 +182,6 @@ public class QiniuLiveTrackerWrapper {
             }
 
             @Override
-            public void onSwitchDrawPoints() {
-                getKwTrackerManager().switchDrawPoints();
-            }
-
-            @Override
             public void onDistortionChanged(KwFilterType filterType) {
                 getKwTrackerManager().switchDistortion(filterType);
 
@@ -191,16 +190,6 @@ public class QiniuLiveTrackerWrapper {
             @Override
             public void onFaceBeautyLevel(float level) {
                 getKwTrackerManager().adjustBeauty(level);
-            }
-
-            @Override
-            public void onGiveGift(StickerConfig giftSticker) {
-                getKwTrackerManager().switchGift(giftSticker, 1);
-            }
-
-            @Override
-            public List<StickerConfig> getGiftStickers() {
-                return getKwTrackerManager().getGiftStickerMgr().getStickerConfigs();
             }
 
             @Override
@@ -226,16 +215,6 @@ public class QiniuLiveTrackerWrapper {
                         break;
                 }
 
-            }
-
-            @Override
-            public List<StickerConfig> getStickers() {
-                return getKwTrackerManager().getStickerMgr().getStickerConfigs();
-            }
-
-            @Override
-            public void writeSticker(StickerConfig stickerConfig) {
-                getKwTrackerManager().getStickerMgr().updateStickerConfig(stickerConfig);
             }
 
             private KwTrackerManager getKwTrackerManager() {

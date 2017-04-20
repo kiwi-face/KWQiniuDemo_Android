@@ -21,7 +21,6 @@ import com.kiwi.tracker.bean.conf.StickerConfig;
 import com.kiwi.tracker.common.Config;
 import com.kiwi.tracker.utils.ZipUtils;
 import com.kiwi.ui.R;
-import com.qiniu.util.Auth;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +53,6 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
     public static final int FAILED_TO_DOWNLOAD = 1;
     public static final int FINISH_TO_DOWNLOAD = 0;
     public static final int NETWORK_ERROR = 2;
-    public static Auth auth = Auth.create(Config.getAK(), Config.getSK());
 
     private List<StickerConfig> mValues;
     private Context mContext;
@@ -232,7 +230,7 @@ public class StickerAdapter extends RecyclerView.Adapter<StickerAdapter.ViewHold
     private String getRealDownloadUrl(StickerConfig sticker) {
         if (null == sticker.getSourceType() || "0".equals(sticker.getSourceType())) {
             String downloadUrl = sticker.getDownloadUrl(Config.getStickerUrl());
-            return auth.privateDownloadUrl(downloadUrl);
+            return downloadUrl;
         } else {
             //可以使用自己的贴纸下载url
             String userUrl = "";
