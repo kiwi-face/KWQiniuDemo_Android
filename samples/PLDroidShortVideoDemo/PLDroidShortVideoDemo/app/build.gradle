@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+
+repositories {
+    flatDir {
+        dirs '../libs'
+    }
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.qiniu.pili.droid.shortvideo.demo"
+        minSdkVersion 18
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+
+    signingConfigs{
+        releaseConfig{
+            storeFile file("../kiwidemo.jks")
+            storePassword "kiwidemo"
+            keyAlias "kiwidemo"
+            keyPassword "kiwidemo"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.releaseConfig
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:25+'
+    compile 'com.android.support:appcompat-v7:25+'
+    compile files('libs/pldroid-shortvideo-0.0.3.jar')
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.qiniu:qiniu-android-sdk:7.3.3'
+    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
+
+    compile project(':ui')
+}
