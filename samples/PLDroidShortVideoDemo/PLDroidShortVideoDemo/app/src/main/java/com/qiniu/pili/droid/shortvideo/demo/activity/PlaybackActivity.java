@@ -106,7 +106,7 @@ public class PlaybackActivity extends Activity implements
 
     @Override
     public void onUploadProgress(String key, double percent) {
-        mProgressBarDeterminate.setProgress((int) (percent * 100));
+        mProgressBarDeterminate.setProgress((int)(percent * 100));
         if (1.0 == percent) {
             mProgressBarDeterminate.setVisibility(View.INVISIBLE);
         }

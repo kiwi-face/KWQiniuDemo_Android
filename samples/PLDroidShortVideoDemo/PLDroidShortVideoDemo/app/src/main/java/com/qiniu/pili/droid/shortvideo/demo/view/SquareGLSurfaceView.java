@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 public class SquareGLSurfaceView extends GLSurfaceView {
-    private static final String TAG = "MatchWidthView";
+    private static final String TAG = "SquareGLSurfaceView";
 
     public SquareGLSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);

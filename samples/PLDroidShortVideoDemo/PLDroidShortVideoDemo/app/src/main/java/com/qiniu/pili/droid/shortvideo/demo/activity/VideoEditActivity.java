@@ -26,6 +26,7 @@ import com.qiniu.pili.droid.shortvideo.PLVideoEditSetting;
 import com.qiniu.pili.droid.shortvideo.PLVideoSaveListener;
 import com.qiniu.pili.droid.shortvideo.PLWatermarkSetting;
 import com.qiniu.pili.droid.shortvideo.demo.R;
+import com.qiniu.pili.droid.shortvideo.demo.utils.Config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,6 +71,7 @@ public class VideoEditActivity extends Activity implements PLVideoSaveListener {
 
         PLVideoEditSetting setting = new PLVideoEditSetting();
         setting.setSourceFilepath(getIntent().getStringExtra(MP4_PATH));
+        setting.setDestFilepath(Config.EDITED_FILE_PATH);
 
         mShortVideoEditor = new PLShortVideoEditor(mPreviewView, setting);
         mShortVideoEditor.setVideoSaveListener(this);
@@ -105,7 +107,7 @@ public class VideoEditActivity extends Activity implements PLVideoSaveListener {
 
     @Override
     public void onSaveVideoSuccess(String filePath) {
-        Log.i(TAG, "save edit success filePath:" + filePath);
+        Log.i(TAG, "save edit success filePath: " + filePath);
         mProcessingDialog.dismiss();
         PlaybackActivity.start(VideoEditActivity.this, filePath);
     }

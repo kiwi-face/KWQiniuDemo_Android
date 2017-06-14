@@ -1,5 +1,7 @@
 package com.qiniu.pili.droid.shortvideo.demo.utils;
 
+import android.os.Environment;
+
 import com.qiniu.android.common.Zone;
 
 public class Config {
@@ -7,4 +9,8 @@ public class Config {
     public static final String ak = "MqF35-H32j1PH8igh-am7aEkduP511g-5-F7j47Z";
     public static Zone DEFAULT_ZONE = Zone.httpsAutoZone;
     public static final String DOMAIN = "oowtvx1xy.bkt.clouddn.com";
+
+    public static final String VIDEO_STORAGE_DIR = Environment.getExternalStorageDirectory() + "/ShortVideo";
+    public static final String RECORD_FILE_PATH = VIDEO_STORAGE_DIR + "/record.mp4";
+    public static final String EDITED_FILE_PATH = VIDEO_STORAGE_DIR + "/edited.mp4";
 }

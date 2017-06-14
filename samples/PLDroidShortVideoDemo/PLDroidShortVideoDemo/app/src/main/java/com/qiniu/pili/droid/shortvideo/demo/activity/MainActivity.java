@@ -1,14 +1,24 @@
 package com.qiniu.pili.droid.shortvideo.demo.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.qiniu.pili.droid.shortvideo.demo.BuildConfig;
 import com.qiniu.pili.droid.shortvideo.demo.R;
+import com.qiniu.pili.droid.shortvideo.demo.utils.PermissionChecker;
 import com.qiniu.pili.droid.shortvideo.demo.utils.RecordSettings;
+import com.qiniu.pili.droid.shortvideo.demo.utils.ToastUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView versionInfoTextView = (TextView) findViewById(R.id.VersionInfoTextView);
+        String info = "版本号：" + getVersionDescription() + "，编译时间：" + getBuildTimeDescription();
+        versionInfoTextView.setText(info);
 
         mPreviewSizeRatioSpinner = (Spinner) findViewById(R.id.PreviewSizeRatioSpinner);
         mPreviewSizeLevelSpinner = (Spinner) findViewById(R.id.PreviewSizeLevelSpinner);
@@ -44,7 +58,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickCapture(View v) {
-        jumpToCaptureActivity(VideoRecordActivity.class);
+        PermissionChecker checker = new PermissionChecker(this);
+        boolean isPermissionOK = Build.VERSION.SDK_INT < Build.VERSION_CODES.M || checker.checkPermission();
+        if (!isPermissionOK) {
+            ToastUtils.s(this, "Some permissions is not approved !!!");
+        } else {
+            jumpToCaptureActivity(VideoRecordActivity.class);
+        }
     }
 
     public void jumpToCaptureActivity(Class<?> cls) {
@@ -54,5 +74,20 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("EncodingSizeLevel", mEncodingSizeLevelSpinner.getSelectedItemPosition());
         intent.putExtra("EncodingBitrateLevel", mEncodingBitrateLevelSpinner.getSelectedItemPosition());
         startActivity(intent);
+    }
+
+    private String getVersionDescription() {
+        PackageManager packageManager = getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "未知";
+    }
+
+    protected String getBuildTimeDescription() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(BuildConfig.BUILD_TIMESTAMP);
     }
 }
