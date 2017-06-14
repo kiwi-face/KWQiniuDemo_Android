@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.kiwi.ui.KwControlView;
+import com.kiwi.ui.model.StickerConfigMgr;
 import com.qiniu.pili.droid.shortvideo.PLAudioEncodeSetting;
 import com.qiniu.pili.droid.shortvideo.PLCameraSetting;
 import com.qiniu.pili.droid.shortvideo.PLConcatStateListener;
@@ -22,7 +24,9 @@ import com.qiniu.pili.droid.shortvideo.PLRecordSetting;
 import com.qiniu.pili.droid.shortvideo.PLRecordStateListener;
 import com.qiniu.pili.droid.shortvideo.PLShortVideoRecorder;
 import com.qiniu.pili.droid.shortvideo.PLVideoEncodeSetting;
+import com.qiniu.pili.droid.shortvideo.PLVideoFilterListener;
 import com.qiniu.pili.droid.shortvideo.demo.R;
+import com.qiniu.pili.droid.shortvideo.demo.tracker.QiniuLiveTrackerWrapper;
 import com.qiniu.pili.droid.shortvideo.demo.utils.Config;
 import com.qiniu.pili.droid.shortvideo.demo.utils.RecordSettings;
 import com.qiniu.pili.droid.shortvideo.demo.utils.ToastUtils;
@@ -44,6 +48,10 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
     private boolean mFlashEnabled;
     private String mRecordErrorMsg;
     private boolean mIsEditVideo = false;
+
+    private QiniuLiveTrackerWrapper qiniuLiveTrackerWrapper;
+    private KwControlView kwControlView;
+    private PLCameraSetting cameraSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +81,7 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
         int encodingSizeLevel = getIntent().getIntExtra("EncodingSizeLevel", 0);
         int encodingBitrateLevel = getIntent().getIntExtra("EncodingBitrateLevel", 0);
 
-        PLCameraSetting cameraSetting = new PLCameraSetting();
+        cameraSetting = new PLCameraSetting();
         PLCameraSetting.CAMERA_FACING_ID facingId = chooseCameraFacingId();
         cameraSetting.setCameraId(facingId);
         cameraSetting.setCameraPreviewSizeRatio(getPreviewSizeRatio(previewSizeRatio));
@@ -88,6 +96,7 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
         PLAudioEncodeSetting audioEncodeSetting = new PLAudioEncodeSetting();
 
         PLFaceBeautySetting faceBeautySetting = new PLFaceBeautySetting(1.0f, 0.5f, 0.5f);
+        faceBeautySetting.setEnable(false);
 
         PLRecordSetting recordSetting = new PLRecordSetting();
         recordSetting.setMaxRecordDuration(RecordSettings.DEFAULT_MAX_RECORD_DURATION);
@@ -96,6 +105,31 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
 
         mShortVideoRecorder.prepare(preview, cameraSetting, microphoneSetting,
                 videoEncodeSetting, audioEncodeSetting, faceBeautySetting, recordSetting);
+        mShortVideoRecorder.setVideoFilterListener(new PLVideoFilterListener() {
+            @Override
+            public void onSurfaceCreated() {
+                qiniuLiveTrackerWrapper.onSurfaceCreated(VideoRecordActivity.this);
+            }
+
+            @Override
+            public void onSurfaceChanged(int width, int height) {
+                //// TODO: 这边的参数，根据预览尺寸调整 
+                qiniuLiveTrackerWrapper.onSurfaceChanged(width, height, 480, 640);
+            }
+
+            @Override
+            public void onSurfaceDestroy() {
+                qiniuLiveTrackerWrapper.onSurfaceDestroyed();
+            }
+
+            @Override
+            public int onDrawFrame(int texId, int texWidth, int texHeight, long l) {
+//        int ret = texId;
+                int ret = qiniuLiveTrackerWrapper.onDrawFrame(texId, texWidth, texHeight);
+                Log.e("tracker", "onDrawFrame,in:" + texId + ",out:" + ret + ",w:" + texWidth + ",h:" + texHeight);
+                return ret;
+            }
+        });
 
         mSectionProgressBar.setFirstPointTime(RecordSettings.DEFAULT_MIN_RECORD_DURATION);
         mSectionProgressBar.setTotalTime(RecordSettings.DEFAULT_MAX_RECORD_DURATION);
@@ -121,6 +155,23 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
             }
         });
         onSectionCountChanged(0, 0);
+
+        initKiwiSdk(cameraSetting);
+    }
+
+    private void initKiwiSdk(PLCameraSetting cameraSetting) {
+        StickerConfigMgr.setSelectedStickerConfig(null);
+
+        qiniuLiveTrackerWrapper = new QiniuLiveTrackerWrapper(this, cameraSetting.getCameraId());
+        qiniuLiveTrackerWrapper.onCreate(this);
+
+        kwControlView = (KwControlView) findViewById(R.id.camera_control_view);
+        kwControlView.setOnEventListener(qiniuLiveTrackerWrapper.initUIEventListener(new Runnable() {
+            @Override
+            public void run() {
+                onClickSwitchCamera(null);
+            }
+        }));
     }
 
     @Override
@@ -128,18 +179,24 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
         super.onResume();
         mRecordBtn.setEnabled(false);
         mShortVideoRecorder.resume();
+
+        qiniuLiveTrackerWrapper.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mShortVideoRecorder.pause();
+
+        qiniuLiveTrackerWrapper.onPause(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mShortVideoRecorder.destroy();
+
+        qiniuLiveTrackerWrapper.onDestroy(this);
     }
 
     public void onClickDelete(View v) {
@@ -155,6 +212,8 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
 
     public void onClickSwitchCamera(View v) {
         mShortVideoRecorder.switchCamera();
+
+        qiniuLiveTrackerWrapper.switchCamera(cameraSetting.getCameraId());
     }
 
     public void onClickSwitchFlash(View v) {
