@@ -1,1 +1,1 @@
-include ':qiniu',  ':ui'
+include ':qiniu_live', ':ui'
