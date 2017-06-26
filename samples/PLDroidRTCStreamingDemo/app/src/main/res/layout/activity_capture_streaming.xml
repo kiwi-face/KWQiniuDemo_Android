@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/content"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".activity.CapStreamingActivity">
+
+    <com.qiniu.pili.droid.streaming.widget.AspectFrameLayout
+        android:id="@+id/cameraPreview_afl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.opengl.GLSurfaceView
+            android:id="@+id/cameraPreview_surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
+    </com.qiniu.pili.droid.streaming.widget.AspectFrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/RemoteWindowA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="onClickRemoteWindowA"
+            android:visibility="invisible">
+
+            <android.opengl.GLSurfaceView
+                android:id="@+id/RemoteGLSurfaceViewA"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:background="@drawable/bg_pressed"
+                android:onClick="onClickKickoutUserA"
+                android:src="@drawable/ic_close"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/RemoteWindowB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="onClickRemoteWindowB"
+            android:visibility="invisible">
+
+            <android.opengl.GLSurfaceView
+                android:id="@+id/RemoteGLSurfaceViewB"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:visibility="invisible"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|right"
+                android:background="@drawable/bg_pressed"
+                android:onClick="onClickKickoutUserB"
+                android:src="@drawable/ic_close"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ControlButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/blue_btn_selector"
+        android:onClick="onClickStreaming"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="开始直播"
+        android:textColor="@android:color/white"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_pressed"
+        android:onClick="onClickSwitchCamera"
+        android:src="@drawable/ic_switch_camera"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_pressed"
+        android:onClick="onClickExit"
+        android:src="@drawable/ic_close"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/ConferenceCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="连麦"
+            android:textColor="@android:color/white"
+            android:visibility="invisible"/>
+
+        <CheckBox
+            android:id="@+id/MuteCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:button="@drawable/mute_btn_selector"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/StatusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/StatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        app:fab_labelStyle="@style/label_style"
+        app:fab_labelsPosition="right">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/adjust_bitrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAdjustBitrate"
+            app:fab_size="mini"
+            app:fab_title="@string/button_adjust_bitrate"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickCaptureFrame"
+            app:fab_size="mini"
+            app:fab_title="@string/button_capture"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickPreviewMirror"
+            app:fab_size="mini"
+            app:fab_title="@string/button_preview_mirror"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickEncodingMirror"
+            app:fab_size="mini"
+            app:fab_title="@string/button_encoding_mirror"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/muteSpeaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickMuteSpeaker"
+            app:fab_size="mini"
+            app:fab_title="@string/button_mute_speaker"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <com.kiwi.ui.KwControlView
+        android:id="@+id/camera_control_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="120dp"/>
+</FrameLayout>
