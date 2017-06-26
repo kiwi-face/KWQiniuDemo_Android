@@ -23,9 +23,8 @@ public class StreamUtils {
     private static String mUserId;
 
     // 业务服务器的地址，需要能提供推流地址、播放地址、RoomToken
-    // 这里原本填写的是七牛的测试业务服务器，现在需要改写为客户自己的业务服务器
     // 例如：http://www.xxx.com/api/
-    public static final String APP_SERVER_BASE = "http://45.78.39.242:8000/rtc-api.php?action=";
+    public static final String APP_SERVER_BASE = "";
 
     // 为了 Demo 的演示方便，建议服务器提供一个获取固定推流地址的链接
     // 传给服务器一个 “房间号” ，由服务器根据 “房间号” 返回一个固定的推流地址
