@@ -302,6 +302,8 @@ public class KwTrackerWrapper {
         mTrackerManager.onSurfaceDestroyed();
     }
 
+    private int newTexId;
+
     /**
      * @param texId     YUV格式纹理
      *                  对纹理进行特效处理（美颜、大眼瘦脸、人脸贴纸、哈哈镜、滤镜）
@@ -315,16 +317,18 @@ public class KwTrackerWrapper {
         //解开绑定
 //        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0);
 
-        int newTexId = texId;
-//        int maxFaceCount = 1;
-        int filterTexId = mTrackerManager.onDrawOESTexture(texId, texWidth, texHeight, 1);
-        if (filterTexId != -1) {
-            newTexId = filterTexId;
-        }
+        if (mFrameId % 2 == 1) {//两帧渲染一次，降低功耗，如果不需要可以去除
+            int filterTexId = mTrackerManager.onDrawOESTexture(texId, texWidth, texHeight, 1);
+            if (filterTexId != -1) {
+                newTexId = filterTexId;
+            } else {
+                newTexId = texId;
+            }
 
-        int error = GLES20.glGetError();//请勿删除当前行获取opengl错误代码
-        if (error != GLES20.GL_NO_ERROR) {
-            Log.d("Tracker", "glError:" + error);
+            int error = GLES20.glGetError();//请勿删除当前行获取opengl错误代码
+            if (error != GLES20.GL_NO_ERROR) {
+                Log.d("Tracker", "glError:" + error);
+            }
         }
 
         if (isDebug)
