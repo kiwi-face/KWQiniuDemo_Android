@@ -359,6 +359,7 @@ public class KwTrackerWrapper {
      * @param outs      yuv输出
      */
     public void textureToNv21(Context context, int textureId, int w, int h, byte[] outs) {
+
         if (rgbaToNv21FBO == null) {
             rgbaToNv21FBO = new RgbaToNv21FBO(GLES20.GL_TEXTURE_2D, w, h);
             GlUtil.checkGlError("new RgbaToNv21FBO");

@@ -488,6 +488,13 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
         mRTCStreamingManager.switchCamera(facingId);
 
         kwTrackerWrapper.switchCamera(facingId.ordinal());
+
+        int length = (int) (data.length / 1.5f);
+        byte[] b = new byte[data.length];
+        for (int i = length; i < data.length; i++) {
+            b[i] = (byte) 128;
+        }
+        data = b;
     }
 
     public void onClickAdjustBitrate(View v) {
