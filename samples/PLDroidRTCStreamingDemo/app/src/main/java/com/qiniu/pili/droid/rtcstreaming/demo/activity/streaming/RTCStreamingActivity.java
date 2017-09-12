@@ -1,4 +1,4 @@
-package com.qiniu.pili.droid.rtcstreaming.demo.activity;
+package com.qiniu.pili.droid.rtcstreaming.demo.activity.streaming;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -71,9 +70,9 @@ import java.util.Map;
 /**
  * 演示使用 SDK 内部的 Video/Audio 采集，实现连麦 & 推流
  */
-public class CapStreamingActivity extends AppCompatActivity implements SurfaceTextureCallback, StreamingPreviewCallback {
+public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTextureCallback, StreamingPreviewCallback {
 
-    private static final String TAG = "CapStreamingActivity";
+    private static final String TAG = "RTCStreamingActivity";
     private static final int MESSAGE_ID_RECONNECTING = 0x01;
     private static final int MINBITRATE = 10 * 1024;
     private static final int MAXBITRATE = 10000 * 1024;
@@ -85,6 +84,7 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
     private CheckBox mConferenceCheckBox;
     private FloatingActionButton mMuteSpeakerButton;
     private FloatingActionButton mBitrateAdjustButton;
+    private FloatingActionButton mTogglePlaybackButton;
 
     private Toast mToast = null;
     private ProgressDialog mProgressDialog;
@@ -112,13 +112,54 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
 
     private boolean mIsStatsEnabled = false;
 
-    private String mRemoteUserId;
     private String mBitrateControl;
+
+    private boolean mIsPlayingback = false;
 
     private KwTrackerWrapper kwTrackerWrapper;
     private KwControlView kwControlView;
 
     private CameraStreamingSetting cameraStreamingSetting;
+
+    @Override
+    public void onSurfaceCreated() {
+        kwTrackerWrapper.onSurfaceCreated(this);
+    }
+
+    @Override
+    public void onSurfaceChanged(int width, int height) {
+        kwTrackerWrapper.onSurfaceChanged(width, height, cameraStreamingSetting.getCameraPreviewWidth(), cameraStreamingSetting.getCameraPreviewHeight());
+    }
+
+    @Override
+    public void onSurfaceDestroyed() {
+        kwTrackerWrapper.onSurfaceDestroyed();
+
+    }
+
+    @Override
+    public int onDrawFrame(int texId, int texWidth, int texHeight, float[] transformMatrix) {
+
+        LogUtils.e(TAG, texWidth + "----" + texHeight);
+        int newTexId = kwTrackerWrapper.onDrawFrame(texId, texWidth, texHeight);
+
+        if (data == null) {
+            data = new byte[texWidth * texHeight * 3 / 2];
+        }
+
+        kwTrackerWrapper.textureToNv21(mCameraPreviewFrameView.getContext(), newTexId, texWidth, texHeight, data);
+        return newTexId;
+
+    }
+
+    private byte[] data;
+
+    @Override
+    public boolean onPreviewFrame(byte[] bytes, int width, int height, int rotation, int fmt, long tsInNanoTime) {
+        if (data != null)
+            System.arraycopy(data, 0, bytes, 0, bytes.length);
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,11 +202,13 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
         mConferenceCheckBox.setOnClickListener(mConferenceButtonClickListener);
         mMuteSpeakerButton = (FloatingActionButton) findViewById(R.id.muteSpeaker);
         mBitrateAdjustButton = (FloatingActionButton) findViewById(R.id.adjust_bitrate);
+        mTogglePlaybackButton = (FloatingActionButton) findViewById(R.id.toggle_playback);
 
         if (mRole == StreamUtils.RTC_ROLE_ANCHOR) {
             mConferenceCheckBox.setVisibility(View.VISIBLE);
         } else {
             mBitrateAdjustButton.setVisibility(View.GONE);
+            mTogglePlaybackButton.setVisibility(View.GONE);
         }
 
         CameraStreamingSetting.CAMERA_FACING_ID facingId = chooseCameraFacingId();
@@ -254,7 +297,6 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
             // set mix overlay params with relative value
             // windowA.setRelativeMixOverlayRect(0.65f, 0.2f, 0.3f, 0.3f);
             // windowB.setRelativeMixOverlayRect(0.65f, 0.5f, 0.3f, 0.3f);
-
         }
 
         /**
@@ -290,7 +332,6 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
             mStreamingProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM2)
                     .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM1)
                     .setEncoderRCMode(StreamingProfile.EncoderRCModes.BITRATE_PRIORITY)
-                    .setPreferredVideoEncodingSize(options.getVideoEncodingWidth(), options.getVideoEncodingHeight())
                     .setFpsControllerEnable(true)
                     .setSendingBufferProfile(new StreamingProfile.SendingBufferProfile(0.2f, 0.8f, 3.0f, 20 * 1000))
                     .setBitrateAdjustMode(
@@ -308,8 +349,10 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
 
             if (isLandscape) {
                 mStreamingProfile.setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.LAND);
+                mStreamingProfile.setPreferredVideoEncodingSize(options.getVideoEncodingWidth(), options.getVideoEncodingHeight());
             } else {
                 mStreamingProfile.setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT);
+                mStreamingProfile.setPreferredVideoEncodingSize(options.getVideoEncodingHeight(), options.getVideoEncodingWidth());
             }
 
             WatermarkSetting watermarksetting = null;
@@ -328,8 +371,8 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
 
         mProgressDialog = new ProgressDialog(this);
 
+        mRTCStreamingManager.setSurfaceTextureCallback(this);
         mRTCStreamingManager.setStreamingPreviewCallback(this);
-
         initKiwi();
     }
 
@@ -359,7 +402,6 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
          * You will receive `Ready` state callback when capture started success
          */
         mRTCStreamingManager.startCapture();
-        mRTCStreamingManager.setSurfaceTextureCallback(this);
 
         kwTrackerWrapper.onResume(this);
     }
@@ -444,6 +486,8 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
         }
         Log.i(TAG, "switchCamera:" + facingId);
         mRTCStreamingManager.switchCamera(facingId);
+
+        kwTrackerWrapper.switchCamera(facingId.ordinal());
     }
 
     public void onClickAdjustBitrate(View v) {
@@ -463,14 +507,14 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
                                 bitrate = Integer.parseInt(textInput);
                             }
                             if (bitrate < MINBITRATE || bitrate > MAXBITRATE) {
-                                Toast.makeText(CapStreamingActivity.this, "请输入规定范围内的码率", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RTCStreamingActivity.this, "请输入规定范围内的码率", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             boolean result = mRTCStreamingManager.adjustVideoBitrate(bitrate);
                             if (result) {
-                                Toast.makeText(CapStreamingActivity.this, "调整成功", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RTCStreamingActivity.this, "调整成功", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(CapStreamingActivity.this, "调整失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RTCStreamingActivity.this, "调整失败", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -495,6 +539,21 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
         } else {
             showToast(getString(R.string.others_fail), Toast.LENGTH_SHORT);
         }
+    }
+
+    public void onClickTogglePlayback(View v) {
+        if (!mIsPublishStreamStarted) {
+            showToast("请先开始直播！", Toast.LENGTH_SHORT);
+            return;
+        }
+        if (mIsPlayingback) {
+            mRTCStreamingManager.stopPlayback();
+            mTogglePlaybackButton.setTitle("开启返听");
+        } else {
+            mRTCStreamingManager.startPlayback();
+            mTogglePlaybackButton.setTitle("关闭返听");
+        }
+        mIsPlayingback = !mIsPlayingback;
     }
 
     public void onClickLogStats(View v) {
@@ -540,12 +599,12 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
         }
         mProgressDialog.setMessage("正在加入连麦 ... ");
         mProgressDialog.show();
-        AsyncTask.execute(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 startConferenceInternal();
             }
-        });
+        }).start();
         return true;
     }
 
@@ -606,12 +665,12 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
         }
         mProgressDialog.setMessage("正在准备推流... ");
         mProgressDialog.show();
-        AsyncTask.execute(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 startPublishStreamingInternal();
             }
-        });
+        }).start();
         return true;
     }
 
@@ -773,7 +832,7 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
             if (msg.what != MESSAGE_ID_RECONNECTING || mIsActivityPaused || !mIsPublishStreamStarted) {
                 return;
             }
-            if (!StreamUtils.isNetworkAvailable(CapStreamingActivity.this)) {
+            if (!StreamUtils.isNetworkAvailable(RTCStreamingActivity.this)) {
                 sendReconnectMessage();
                 return;
             }
@@ -974,7 +1033,7 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
                 if (mToast != null) {
                     mToast.cancel();
                 }
-                mToast = Toast.makeText(CapStreamingActivity.this, text, duration);
+                mToast = Toast.makeText(RTCStreamingActivity.this, text, duration);
                 mToast.show();
             }
         });
@@ -1005,47 +1064,4 @@ public class CapStreamingActivity extends AppCompatActivity implements SurfaceTe
         return false;
     }
 
-    @Override
-    public void onSurfaceCreated() {
-        kwTrackerWrapper.onSurfaceCreated(this);
-    }
-
-    @Override
-    public void onSurfaceChanged(int width, int height) {
-
-        kwTrackerWrapper.onSurfaceChanged(width, height, cameraStreamingSetting.getCameraPreviewWidth(), cameraStreamingSetting.getCameraPreviewHeight());
-    }
-
-    @Override
-    public void onSurfaceDestroyed() {
-        kwTrackerWrapper.onSurfaceDestroyed();
-
-    }
-
-
-
-    @Override
-    public int onDrawFrame(int texId, int texWidth, int texHeight, float[] transformMatrix) {
-
-        LogUtils.e(TAG, texWidth + "----" + texHeight);
-
-        int newTexId = kwTrackerWrapper.onDrawFrame(texId, texWidth, texHeight);
-
-        if (data == null) {
-            data = new byte[texWidth * texHeight * 3 / 2];
-        }
-
-        kwTrackerWrapper.textureToNv21(mCameraPreviewFrameView.getContext(), newTexId, texWidth, texHeight, data);
-        return newTexId;
-
-    }
-
-    private byte[] data;
-
-    @Override
-    public boolean onPreviewFrame(byte[] bytes, int width, int height, int rotation, int fmt, long tsInNanoTime) {
-        if (data != null)
-            System.arraycopy(data, 0, bytes, 0, bytes.length);
-        return false;
-    }
 }

@@ -1,4 +1,4 @@
-package com.qiniu.pili.droid.rtcstreaming.demo.activity;
+package com.qiniu.pili.droid.rtcstreaming.demo.activity.playback;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -15,7 +15,11 @@ import android.widget.Toast;
 import com.pili.pldroid.player.AVOptions;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
+import com.qiniu.pili.droid.rtcstreaming.demo.activity.streaming.ExtCapStreamingActivity;
+import com.qiniu.pili.droid.rtcstreaming.demo.activity.streaming.PKViceAnchorActivity;
 import com.qiniu.pili.droid.rtcstreaming.demo.core.StreamUtils;
+import com.qiniu.pili.droid.rtcstreaming.demo.activity.streaming.RTCAudioStreamingActivity;
+import com.qiniu.pili.droid.rtcstreaming.demo.activity.streaming.RTCStreamingActivity;
 
 public class PlaybackActivity extends AppCompatActivity {
 
@@ -105,14 +109,14 @@ public class PlaybackActivity extends AppCompatActivity {
     public void onClickConference(View v) {
         Toast.makeText(this, "申请连麦... 主播已同意 !", Toast.LENGTH_SHORT).show();
         if (mIsAudioOnly) {
-            jumpToStreamingActivity(StreamUtils.RTC_ROLE_VICE_ANCHOR, CapAudioStreamingActivity.class);
+            jumpToStreamingActivity(StreamUtils.RTC_ROLE_VICE_ANCHOR, RTCAudioStreamingActivity.class);
         } else if (mIsPKMode) {
             Intent intent = new Intent(this, PKViceAnchorActivity.class);
             intent.putExtra("roomName", mRoomName);
             startActivity(intent);
         } else {
             if (!mIsExtCapture) {
-                jumpToStreamingActivity(StreamUtils.RTC_ROLE_VICE_ANCHOR, CapStreamingActivity.class);
+                jumpToStreamingActivity(StreamUtils.RTC_ROLE_VICE_ANCHOR, RTCStreamingActivity.class);
             } else {
                 jumpToStreamingActivity(StreamUtils.RTC_ROLE_VICE_ANCHOR, ExtCapStreamingActivity.class);
             }

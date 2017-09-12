@@ -1,17 +1,16 @@
-package com.qiniu.pili.droid.rtcstreaming.demo.activity;
+package com.qiniu.pili.droid.rtcstreaming.demo.activity.streaming;
 
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
+import android.graphics.RectF;
 import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,21 +21,20 @@ import android.widget.Toast;
 import com.qiniu.pili.droid.rtcstreaming.RTCConferenceOptions;
 import com.qiniu.pili.droid.rtcstreaming.RTCConferenceState;
 import com.qiniu.pili.droid.rtcstreaming.RTCConferenceStateChangedListener;
+import com.qiniu.pili.droid.rtcstreaming.RTCMediaStreamingManager;
 import com.qiniu.pili.droid.rtcstreaming.RTCRemoteWindowEventListener;
 import com.qiniu.pili.droid.rtcstreaming.RTCStartConferenceCallback;
-import com.qiniu.pili.droid.rtcstreaming.RTCStreamingManager;
-import com.qiniu.pili.droid.rtcstreaming.RTCUserEventListener;
 import com.qiniu.pili.droid.rtcstreaming.RTCVideoWindow;
 import com.qiniu.pili.droid.rtcstreaming.demo.R;
-import com.qiniu.pili.droid.rtcstreaming.demo.core.ExtAudioCapture;
-import com.qiniu.pili.droid.rtcstreaming.demo.core.ExtVideoCapture;
 import com.qiniu.pili.droid.rtcstreaming.demo.core.StreamUtils;
 import com.qiniu.pili.droid.streaming.AVCodecType;
+import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
 import com.qiniu.pili.droid.streaming.StreamStatusCallback;
 import com.qiniu.pili.droid.streaming.StreamingProfile;
 import com.qiniu.pili.droid.streaming.StreamingSessionListener;
 import com.qiniu.pili.droid.streaming.StreamingState;
 import com.qiniu.pili.droid.streaming.StreamingStateChangedListener;
+import com.qiniu.pili.droid.streaming.WatermarkSetting;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,11 +43,13 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 /**
- *  演示在 SDK 外部自定义 Video/Audio 采集，实现连麦 & 推流
+ *  演示横屏 PK 模式下的副主播端代码
+ *  PK 模式只支持一个主播和一个副主播进行连麦，主播的布局配置方法如下：
+ *  左右两个 GLSurfaceView，左边显示主播的预览，右边显示副主播的画面
+ *  主播需要配置合流画面的参数：把主播配置为 50%，位于左边，副主播为 50%，位于右边
  */
-public class ExtCapStreamingActivity extends AppCompatActivity {
-
-    private static final String TAG = "ExtCapStreamingActivity";
+public class PKAnchorActivity extends AppCompatActivity {
+    private static final String TAG = "PKAnchorActivity";
     private static final int MESSAGE_ID_RECONNECTING = 0x01;
 
     private TextView mStatusTextView;
@@ -57,14 +57,11 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
     private Button mControlButton;
     private CheckBox mMuteCheckBox;
     private CheckBox mConferenceCheckBox;
-    private SurfaceView mSurfaceView;
 
     private Toast mToast = null;
     private ProgressDialog mProgressDialog;
 
-    private RTCStreamingManager mRTCStreamingManager;
-    private ExtVideoCapture mExtVideoCapture;
-    private ExtAudioCapture mExtAudioCapture;
+    private RTCMediaStreamingManager mRTCStreamingManager;
 
     private StreamingProfile mStreamingProfile;
 
@@ -72,30 +69,33 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
     private boolean mIsPublishStreamStarted = false;
     private boolean mIsConferenceStarted = false;
     private boolean mIsInReadyState = false;
+    private int mCurrentCamFacingIndex;
 
-    private int mRole;
     private String mRoomName;
-
-    private boolean mIsEncodingMirror = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        setContentView(R.layout.activity_extcapture_streaming);
+        setContentView(R.layout.activity_pk_anchor);
 
         /**
          * Step 1: init sdk, you can also move this to Application.onCreate
          */
-        RTCStreamingManager.init(getApplicationContext());
+        RTCMediaStreamingManager.init(getApplicationContext());
 
-        mRole = getIntent().getIntExtra("role", StreamUtils.RTC_ROLE_VICE_ANCHOR);
-        mRoomName = getIntent().getStringExtra("roomName");
+        /**
+         * Step 2: find & init views
+         */
+        GLSurfaceView cameraPreviewFrameView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
+
         boolean isSwCodec = getIntent().getBooleanExtra("swcodec", true);
-        boolean isLandscape = getIntent().getBooleanExtra("orientation", false);
-        setRequestedOrientation(isLandscape ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        mRoomName = getIntent().getStringExtra("roomName");
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        mSurfaceView = (SurfaceView) findViewById(R.id.LocalPreviewSurface);
+        boolean isBeautyEnabled = getIntent().getBooleanExtra("beauty", false);
+        boolean isWaterMarkEnabled = getIntent().getBooleanExtra("watermark", false);
+        boolean isDebugModeEnabled = getIntent().getBooleanExtra("debugMode", false);
 
         mControlButton = (Button) findViewById(R.id.ControlButton);
         mStatusTextView = (TextView) findViewById(R.id.StatusTextView);
@@ -104,93 +104,106 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         mMuteCheckBox.setOnClickListener(mMuteButtonClickListener);
         mConferenceCheckBox = (CheckBox) findViewById(R.id.ConferenceCheckBox);
         mConferenceCheckBox.setOnClickListener(mConferenceButtonClickListener);
+        mConferenceCheckBox.setVisibility(View.VISIBLE);
 
-        if (mRole == StreamUtils.RTC_ROLE_ANCHOR) {
-            mConferenceCheckBox.setVisibility(View.VISIBLE);
+        CameraStreamingSetting.CAMERA_FACING_ID facingId = chooseCameraFacingId();
+        mCurrentCamFacingIndex = facingId.ordinal();
+
+        /**
+         * Step 3: config camera settings
+         */
+        CameraStreamingSetting cameraStreamingSetting = new CameraStreamingSetting();
+        cameraStreamingSetting.setCameraFacingId(facingId)
+                .setContinuousFocusModeEnabled(true)
+                .setRecordingHint(false)
+                .setResetTouchFocusDelayInMs(3000)
+                .setFocusMode(CameraStreamingSetting.FOCUS_MODE_CONTINUOUS_PICTURE)
+                .setCameraPrvSizeLevel(CameraStreamingSetting.PREVIEW_SIZE_LEVEL.MEDIUM)
+                .setCameraPrvSizeRatio(CameraStreamingSetting.PREVIEW_SIZE_RATIO.RATIO_4_3);
+
+        if (isBeautyEnabled) {
+            cameraStreamingSetting.setBuiltInFaceBeautyEnabled(true); // Using sdk built in face beauty algorithm
+            cameraStreamingSetting.setFaceBeautySetting(new CameraStreamingSetting.FaceBeautySetting(0.8f, 0.8f, 0.6f)); // sdk built in face beauty settings
+            cameraStreamingSetting.setVideoFilter(CameraStreamingSetting.VIDEO_FILTER_TYPE.VIDEO_FILTER_BEAUTY); // set the beauty on/off
         }
 
+        /**
+         * Step 4: Must disable this options in PK mode
+         */
+        cameraStreamingSetting.setPreviewAdaptToEncodingSize(false);
+
+        /**
+         * Step 5: create streaming manager and set listeners
+         */
         AVCodecType codecType = isSwCodec ? AVCodecType.SW_VIDEO_WITH_SW_AUDIO_CODEC : AVCodecType.HW_VIDEO_YUV_AS_INPUT_WITH_HW_AUDIO_CODEC;
-        mRTCStreamingManager = new RTCStreamingManager(getApplicationContext(), codecType);
+        mRTCStreamingManager = new RTCMediaStreamingManager(getApplicationContext(), cameraPreviewFrameView, codecType);
+
+        mRTCStreamingManager.setDebugLoggingEnabled(isDebugModeEnabled);
+
         mRTCStreamingManager.setConferenceStateListener(mRTCStreamingStateChangedListener);
         mRTCStreamingManager.setRemoteWindowEventListener(mRTCRemoteWindowEventListener);
-        mRTCStreamingManager.setStreamingStateListener(mStreamingStateChangedListener);
-        mRTCStreamingManager.setUserEventListener(mRTCUserEventListener);
-        mRTCStreamingManager.setDebugLoggingEnabled(false);
 
+        mRTCStreamingManager.setStreamStatusCallback(mStreamStatusCallback);
+        mRTCStreamingManager.setStreamingStateListener(mStreamingStateChangedListener);
+        mRTCStreamingManager.setStreamingSessionListener(mStreamingSessionListener);
+
+        /**
+         * Step 6: set conference options
+         */
         RTCConferenceOptions options = new RTCConferenceOptions();
-        if (mRole == StreamUtils.RTC_ROLE_ANCHOR) {
-            // anchor should use a bigger size, must equals to `StreamProfile.setPreferredVideoEncodingSize` or `StreamProfile.setEncodingSizeLevel`
-            // RATIO_16_9 & VIDEO_ENCODING_SIZE_HEIGHT_480 means the output size is 848 x 480
-            options.setVideoEncodingSizeRatio(RTCConferenceOptions.VIDEO_ENCODING_SIZE_RATIO.RATIO_16_9);
-            options.setVideoEncodingSizeLevel(RTCConferenceOptions.VIDEO_ENCODING_SIZE_HEIGHT_480);
-            options.setVideoBitrateRange(300 * 1024, 800 * 1024);
-            // 15 fps is enough
-            options.setVideoEncodingFps(15);
-        } else {
-            // vice anchor can use a smaller size
-            // RATIO_4_3 & VIDEO_ENCODING_SIZE_HEIGHT_240 means the output size is 320 x 240
-            // 4:3 looks better in the mix frame
-            options.setVideoEncodingSizeRatio(RTCConferenceOptions.VIDEO_ENCODING_SIZE_RATIO.RATIO_4_3);
-            options.setVideoEncodingSizeLevel(RTCConferenceOptions.VIDEO_ENCODING_SIZE_HEIGHT_240);
-            options.setVideoBitrateRange(300 * 1024, 800 * 1024);
-            // 15 fps is enough
-            options.setVideoEncodingFps(15);
-        }
-        options.setHWCodecEnabled(!isSwCodec);
+        // RATIO_4_3 & VIDEO_ENCODING_SIZE_HEIGHT_480 means the output size is 640 x 480
+        options.setVideoEncodingSizeRatio(RTCConferenceOptions.VIDEO_ENCODING_SIZE_RATIO.RATIO_4_3);
+        options.setVideoEncodingSizeLevel(RTCConferenceOptions.VIDEO_ENCODING_SIZE_HEIGHT_480);
+        options.setVideoBitrateRange(300 * 1024, 800 * 1024);
+        // 15 fps is enough
+        options.setVideoEncodingFps(15);
         mRTCStreamingManager.setConferenceOptions(options);
 
-        // add the remote window
-        RTCVideoWindow windowA = new RTCVideoWindow(findViewById(R.id.RemoteWindowA), (GLSurfaceView)findViewById(R.id.RemoteGLSurfaceViewA));
-        RTCVideoWindow windowB = new RTCVideoWindow(findViewById(R.id.RemoteWindowB), (GLSurfaceView)findViewById(R.id.RemoteGLSurfaceViewB));
+        /**
+         * Step 7: Set position of local window
+         * This must be called before RTCMediaStreamingManager.prepare() or it won't work.
+         */
+        mRTCStreamingManager.setLocalWindowPosition(new RectF(0, 0, 0.5f, 1.0f));
 
-        // The anchor must configure the mix stream position and size
-        if (mRole == StreamUtils.RTC_ROLE_ANCHOR) {
-            // set mix overlay params with absolute value
-            // the w & h of remote window equals with or smaller than the vice anchor can reduce cpu consumption
-            if (isLandscape) {
-                windowA.setAbsolutetMixOverlayRect(options.getVideoEncodingWidth() - 320, 100, 320, 240);
-                windowB.setAbsolutetMixOverlayRect(0, 100, 320, 240);
-            } else {
-                windowA.setAbsolutetMixOverlayRect(options.getVideoEncodingHeight() - 240, 100, 240, 320);
-                windowB.setAbsolutetMixOverlayRect(options.getVideoEncodingHeight() - 240, 420, 240, 320);
-            }
+        /**
+         * Step 8: create the remote windows
+         */
+        RTCVideoWindow windowA = new RTCVideoWindow((GLSurfaceView)findViewById(R.id.RemoteGLSurfaceViewA));
 
-            // set mix overlay params with relative value
-            // windowA.setRelativeMixOverlayRect(0.65f, 0.2f, 0.3f, 0.3f);
-            // windowB.setRelativeMixOverlayRect(0.65f, 0.5f, 0.3f, 0.3f);
-        }
+        /**
+         * Step 9: configure the mix stream position and size (only anchor)
+         *          set mix overlay params with relative value
+         */
+        windowA.setRelativeMixOverlayRect(0.5f, 0.0f, 0.5f, 1.0f);
 
-        // there is no enough space to place a second window if using landscape mode
-        // so in the demo, we only enable one window in landscape mode
+        /**
+         * Step 10: add the remote windows
+         */
         mRTCStreamingManager.addRemoteWindow(windowA);
-        if (isLandscape) {
-            windowB.setVisibility(View.GONE);
-        } else {
-            mRTCStreamingManager.addRemoteWindow(windowB);
+
+        /**
+         * Step 11: config streaming profile(only anchor)
+         */
+        mStreamingProfile = new StreamingProfile();
+        mStreamingProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM2)
+                .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM1)
+                .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
+                .setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.LAND)
+                .setPreferredVideoEncodingSize(options.getVideoEncodingWidth() * 2, options.getVideoEncodingHeight());
+
+        WatermarkSetting watermarksetting = null;
+        if (isWaterMarkEnabled) {
+            watermarksetting = new WatermarkSetting(this);
+            watermarksetting.setResourceId(R.drawable.qiniu_logo)
+                    .setSize(WatermarkSetting.WATERMARK_SIZE.MEDIUM)
+                    .setAlpha(100)
+                    .setCustomPosition(0.5f, 0.5f);
         }
 
-        // the anchor must configure the `StreamingProfile`
-        if (mRole == StreamUtils.RTC_ROLE_ANCHOR) {
-            mRTCStreamingManager.setStreamStatusCallback(mStreamStatusCallback);
-            mRTCStreamingManager.setStreamingStateListener(mStreamingStateChangedListener);
-            mRTCStreamingManager.setStreamingSessionListener(mStreamingSessionListener);
-            mStreamingProfile = new StreamingProfile();
-            mStreamingProfile.setVideoQuality(StreamingProfile.VIDEO_QUALITY_MEDIUM2)
-                    .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM1)
-                    .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
-                    .setPreferredVideoEncodingSize(options.getVideoEncodingWidth(), options.getVideoEncodingHeight());
-            if (isLandscape) {
-                mStreamingProfile.setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.LAND);
-            } else {
-                mStreamingProfile.setEncodingOrientation(StreamingProfile.ENCODING_ORIENTATION.PORT);
-            }
-            mRTCStreamingManager.prepare(mStreamingProfile);
-        } else {
-            mControlButton.setText("开始连麦");
-        }
-
-        mExtVideoCapture = new ExtVideoCapture(mSurfaceView);
-        mExtAudioCapture = new ExtAudioCapture();
+        /**
+         * Step 12: do prepare
+         */
+        mRTCStreamingManager.prepare(cameraStreamingSetting, null,  watermarksetting, mStreamingProfile);
 
         mProgressDialog = new ProgressDialog(this);
     }
@@ -199,48 +212,50 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mIsActivityPaused = false;
-        mRTCStreamingManager.resume();
-        mExtVideoCapture.setOnPreviewFrameCallback(mOnPreviewFrameCallback);
-        mExtAudioCapture.setOnAudioFrameCapturedListener(mOnAudioFrameCapturedListener);
-        mExtAudioCapture.startCapture();
+        /**
+         * Step 13: You must start capture before conference or streaming
+         * You will receive `Ready` state callback when capture started success
+         */
+        mRTCStreamingManager.startCapture();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mIsActivityPaused = true;
-        mRTCStreamingManager.pause();
+        /**
+         * Step 14: You must stop capture, stop conference, stop streaming when activity paused
+         */
+        mRTCStreamingManager.stopCapture();
         stopConference();
         stopPublishStreaming();
-        mExtVideoCapture.setOnPreviewFrameCallback(null);
-        mExtAudioCapture.setOnAudioFrameCapturedListener(null);
-        mExtAudioCapture.stopCapture();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        /**
+         * Step 15: You must call destroy to release some resources when activity destroyed
+         */
         mRTCStreamingManager.destroy();
-        RTCStreamingManager.deinit();
-    }
-
-    public void onClickKickoutUserA(View v) {
-        mRTCStreamingManager.kickoutUser(R.id.RemoteGLSurfaceViewA);
-    }
-
-    public void onClickKickoutUserB(View v) {
-        mRTCStreamingManager.kickoutUser(R.id.RemoteGLSurfaceViewB);
+        /**
+         * Step 16: You can also move this to your MainActivity.onDestroy
+         */
+        RTCMediaStreamingManager.deinit();
     }
 
     public void onClickSwitchCamera(View v) {
-        mSurfaceView.setVisibility(View.GONE);
-        mExtVideoCapture.switchCamera();
-        mSurfaceView.setVisibility(View.VISIBLE);
-    }
-
-    public void onClickEncodingMirror(View v) {
-        mIsEncodingMirror = !mIsEncodingMirror;
-        showToast(getString(R.string.mirror_success), Toast.LENGTH_SHORT);
+        mCurrentCamFacingIndex = (mCurrentCamFacingIndex + 1) % CameraStreamingSetting.getNumberOfCameras();
+        CameraStreamingSetting.CAMERA_FACING_ID facingId;
+        if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK.ordinal()) {
+            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK;
+        } else if (mCurrentCamFacingIndex == CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT.ordinal()) {
+            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT;
+        } else {
+            facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
+        }
+        Log.i(TAG, "switchCamera:" + facingId);
+        mRTCStreamingManager.switchCamera(facingId);
     }
 
     public void onClickExit(View v) {
@@ -253,12 +268,12 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         }
         mProgressDialog.setMessage("正在加入连麦 ... ");
         mProgressDialog.show();
-        AsyncTask.execute(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 startConferenceInternal();
             }
-        });
+        }).start();
         return true;
     }
 
@@ -317,12 +332,12 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         }
         mProgressDialog.setMessage("正在准备推流... ");
         mProgressDialog.show();
-        AsyncTask.execute(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 startPublishStreamingInternal();
             }
-        });
+        }).start();
         return true;
     }
 
@@ -434,16 +449,20 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
                      */
                     Log.d(TAG, "onStateChanged state:" + "io error");
                     showToast(getString(R.string.io_error), Toast.LENGTH_SHORT);
+                    stopPublishStreaming();
                     sendReconnectMessage();
                     // stopPublishStreaming();
                     break;
                 case DISCONNECTED:
                     /**
                      * Network-connection is broken after `startStreaming`.
+                     * You can do reconnecting in `onRestartStreamingHandled` or just stop publish streaming
                      * You can do reconnecting in `onRestartStreamingHandled`
                      */
                     Log.d(TAG, "onStateChanged state:" + "disconnected");
                     setStatusText(getString(R.string.disconnected));
+                    // we do reconnect in `onRestartStreamingHandled`
+                    // stopPublishStreaming();
                     // we will process this state in `onRestartStreamingHandled`
                     break;
             }
@@ -471,6 +490,11 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
 
         @Override
         public Camera.Size onPreviewSizeSelected(List<Camera.Size> list) {
+            for (Camera.Size size : list) {
+                if (size.height >= 480) {
+                    return size;
+                }
+            }
             return null;
         }
     };
@@ -481,7 +505,7 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
             if (msg.what != MESSAGE_ID_RECONNECTING || mIsActivityPaused || !mIsPublishStreamStarted) {
                 return;
             }
-            if (!StreamUtils.isNetworkAvailable(ExtCapStreamingActivity.this)) {
+            if (!StreamUtils.isNetworkAvailable(PKAnchorActivity.this)) {
                 sendReconnectMessage();
                 return;
             }
@@ -527,21 +551,15 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
                     showToast(getString(R.string.user_kickout_by_host), Toast.LENGTH_SHORT);
                     finish();
                     break;
+                case OPEN_CAMERA_FAIL:
+                    showToast(getString(R.string.failed_open_camera), Toast.LENGTH_SHORT);
+                    break;
+                case AUDIO_RECORDING_FAIL:
+                    showToast(getString(R.string.failed_open_microphone), Toast.LENGTH_SHORT);
+                    break;
                 default:
                     return;
             }
-        }
-    };
-
-    private RTCUserEventListener mRTCUserEventListener = new RTCUserEventListener() {
-        @Override
-        public void onUserJoinConference(String remoteUserId) {
-            Log.d(TAG, "onUserJoinConference: " + remoteUserId);
-        }
-
-        @Override
-        public void onUserLeaveConference(String remoteUserId) {
-            Log.d(TAG, "onUserLeaveConference: " + remoteUserId);
         }
     };
 
@@ -562,6 +580,13 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         }
     };
 
+    private View.OnClickListener mMuteButtonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mRTCStreamingManager.mute(mMuteCheckBox.isChecked());
+        }
+    };
+
     private View.OnClickListener mConferenceButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -573,26 +598,11 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener mMuteButtonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            mRTCStreamingManager.mute(mMuteCheckBox.isChecked());
-        }
-    };
-
     public void onClickStreaming(View v) {
-        if (mRole == StreamUtils.RTC_ROLE_ANCHOR) {
-            if (!mIsPublishStreamStarted) {
-                startPublishStreaming();
-            } else {
-                stopPublishStreaming();
-            }
+        if (!mIsPublishStreamStarted) {
+            startPublishStreaming();
         } else {
-            if (!mIsConferenceStarted) {
-                startConference();
-            } else {
-                stopConference();
-            }
+            stopPublishStreaming();
         }
     }
 
@@ -605,32 +615,24 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         });
     }
 
+    private void updateControlButtonText() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mIsPublishStreamStarted) {
+                    mControlButton.setText(getString(R.string.stop_streaming));
+                } else {
+                    mControlButton.setText(getString(R.string.start_streaming));
+                }
+            }
+        });
+    }
+
     private void setConferenceBoxChecked(final boolean enabled) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mConferenceCheckBox.setChecked(enabled);
-            }
-        });
-    }
-
-    private void updateControlButtonText() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mRole == StreamUtils.RTC_ROLE_ANCHOR) {
-                    if (mIsPublishStreamStarted) {
-                        mControlButton.setText(getString(R.string.stop_streaming));
-                    } else {
-                        mControlButton.setText(getString(R.string.start_streaming));
-                    }
-                } else {
-                    if (mIsConferenceStarted) {
-                        mControlButton.setText(getString(R.string.stop_conference));
-                    } else {
-                        mControlButton.setText(getString(R.string.start_conference));
-                    }
-                }
             }
         });
     }
@@ -650,6 +652,15 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         }
     };
 
+    private void dismissProgressDialog() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mProgressDialog.dismiss();
+            }
+        });
+    }
+
     private void showToast(final String text, final int duration) {
         if (mIsActivityPaused) {
             return;
@@ -660,38 +671,20 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
                 if (mToast != null) {
                     mToast.cancel();
                 }
-                mToast = Toast.makeText(ExtCapStreamingActivity.this, text, duration);
+                mToast = Toast.makeText(PKAnchorActivity.this, text, duration);
                 mToast.show();
+
             }
         });
     }
 
-    private void dismissProgressDialog() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mProgressDialog.dismiss();
-            }
-        });
+    private CameraStreamingSetting.CAMERA_FACING_ID chooseCameraFacingId() {
+        if (CameraStreamingSetting.hasCameraFacing(CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD)) {
+            return CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
+        } else if (CameraStreamingSetting.hasCameraFacing(CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT)) {
+            return CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_FRONT;
+        } else {
+            return CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_BACK;
+        }
     }
-
-    private ExtVideoCapture.OnPreviewFrameCallback mOnPreviewFrameCallback = new ExtVideoCapture.OnPreviewFrameCallback() {
-        @Override
-        public void onPreviewFrameCaptured(byte[] data, int width, int height, int orientation, boolean mirror, int fmt, long tsInNanoTime) {
-            // Log.d(TAG, "onPreviewFrameCaptured: " + width + "," + height + ", " + data.length + ", timestamp: " + tsInNanoTime);
-            if (mRTCStreamingManager.isStreamingStarted() || mRTCStreamingManager.isConferenceStarted()) {
-                mRTCStreamingManager.inputVideoFrame(data, width, height, orientation, mIsEncodingMirror, fmt, tsInNanoTime);
-            }
-        }
-    };
-
-    private ExtAudioCapture.OnAudioFrameCapturedListener mOnAudioFrameCapturedListener = new ExtAudioCapture.OnAudioFrameCapturedListener() {
-        @Override
-        public void onAudioFrameCaptured(byte[] audioData, long tsInNanoTime) {
-            // Log.d(TAG, "onAudioFrameCaptured: " + tsInNanoTime);
-            if (mRTCStreamingManager.isStreamingStarted() || mRTCStreamingManager.isConferenceStarted()) {
-                mRTCStreamingManager.inputAudioFrame(audioData, tsInNanoTime);
-            }
-        }
-    };
 }

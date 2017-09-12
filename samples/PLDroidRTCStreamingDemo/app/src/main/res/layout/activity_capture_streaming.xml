@@ -5,7 +5,7 @@
              android:id="@+id/content"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".activity.CapStreamingActivity">
+             tools:context=".activity.streaming.RTCStreamingActivity">
 
     <com.qiniu.pili.droid.streaming.widget.AspectFrameLayout
         android:id="@+id/cameraPreview_afl"
@@ -162,6 +162,14 @@
         app:fab_labelsPosition="right">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/toggle_playback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickTogglePlayback"
+            app:fab_size="mini"
+            app:fab_title="@string/button_start_playback"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/adjust_bitrate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -204,5 +212,6 @@
         android:id="@+id/camera_control_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="120dp"/>
+        android:layout_marginBottom="120dp"
+        android:layout_marginTop="50dp"/>
 </FrameLayout>

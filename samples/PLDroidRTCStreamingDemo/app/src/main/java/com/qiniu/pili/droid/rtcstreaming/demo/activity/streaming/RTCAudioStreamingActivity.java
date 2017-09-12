@@ -1,10 +1,9 @@
-package com.qiniu.pili.droid.rtcstreaming.demo.activity;
+package com.qiniu.pili.droid.rtcstreaming.demo.activity.streaming;
 
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -44,9 +43,9 @@ import java.util.List;
 /**
  *  演示使用 SDK 内部的 Audio 采集，实现纯音频连麦 & 推流
  */
-public class CapAudioStreamingActivity extends AppCompatActivity {
+public class RTCAudioStreamingActivity extends AppCompatActivity {
 
-    private static final String TAG = "CapStreamingActivity";
+    private static final String TAG = "RTCStreamingActivity";
     private static final int MESSAGE_ID_RECONNECTING = 0x01;
 
     private TextView mStatusTextView;
@@ -170,12 +169,12 @@ public class CapAudioStreamingActivity extends AppCompatActivity {
         }
         mProgressDialog.setMessage("正在加入连麦 ... ");
         mProgressDialog.show();
-        AsyncTask.execute(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 startConferenceInternal();
             }
-        });
+        }).start();
         return true;
     }
 
@@ -234,12 +233,12 @@ public class CapAudioStreamingActivity extends AppCompatActivity {
         }
         mProgressDialog.setMessage("正在准备推流... ");
         mProgressDialog.show();
-        AsyncTask.execute(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 startPublishStreamingInternal();
             }
-        });
+        }).start();
         return true;
     }
 
@@ -392,7 +391,7 @@ public class CapAudioStreamingActivity extends AppCompatActivity {
             if (msg.what != MESSAGE_ID_RECONNECTING || mIsActivityPaused || !mIsPublishStreamStarted) {
                 return;
             }
-            if (!StreamUtils.isNetworkAvailable(CapAudioStreamingActivity.this)) {
+            if (!StreamUtils.isNetworkAvailable(RTCAudioStreamingActivity.this)) {
                 sendReconnectMessage();
                 return;
             }
@@ -568,7 +567,7 @@ public class CapAudioStreamingActivity extends AppCompatActivity {
                 if (mToast != null) {
                     mToast.cancel();
                 }
-                mToast = Toast.makeText(CapAudioStreamingActivity.this, text, duration);
+                mToast = Toast.makeText(RTCAudioStreamingActivity.this, text, duration);
                 mToast.show();
             }
         });

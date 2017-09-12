@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RTCStreamingDemo</string>
+    <string name="app_name">七牛连麦 Demo</string>
 
     <string name="failed_to_start_streaming">无法成功开启直播 ！</string>
     <string name="failed_to_start_conference">无法成功开启连麦，错误码：</string>
@@ -55,6 +55,9 @@
     <string name="button_subscribe">订阅视频</string>
     <string name="button_unsubscribe">取消订阅</string>
     <string name="button_adjust_bitrate">调整码率</string>
+    <string name="button_toggle_picture_streaming">图片推流</string>
+    <string name="button_change_picture_path">切换图片</string>
+    <string name="button_start_playback">开启返听</string>
 
     <string name="others_muted">已静音其他人</string>
     <string name="others_unmuted">已取消静音其他人</string>
@@ -63,4 +66,9 @@
     <string name="log_stats_failed">无法获取统计信息</string>
     <string name="button_mixed_callback_enable">打印合流回调</string>
     <string name="button_mixed_callback_disable">取消打印合流回调</string>
+    <string name="demo_description">
+        直播连麦：该模块是包含推流功能的连麦模块，用户可以扮演主播、副主播以及观众等三种角色\n\n视频互动：该模块是连麦互动模块，不包含推流功能，但是包含更灵活的音视频操作接口，用户可以自由的加入房间进行视频互动
+    </string>
+    <string name="rtc_rtmp">直播连麦</string>
+    <string name="rtc_only">视频互动</string>
 </resources>

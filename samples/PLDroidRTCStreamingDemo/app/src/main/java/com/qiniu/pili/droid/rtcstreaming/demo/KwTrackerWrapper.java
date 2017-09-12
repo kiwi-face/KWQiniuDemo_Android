@@ -70,7 +70,7 @@ public class KwTrackerWrapper {
         //copy assets config/sticker/filter to sdcard
         ResourceHelper.copyResource2SD(context);
         //关闭日志打印
-        Config.isDebug = false;
+        Config.isDebug = true;
     }
 
     public void onCreate(Activity activity) {
@@ -88,6 +88,15 @@ public class KwTrackerWrapper {
             rgbaToNv21FBO = null;
         }
 
+    }
+
+    public void switchCamera(int ordinal) {
+        mTrackerManager.switchCamera(ordinal);
+        if (rgbaToNv21FBO != null) {
+            rgbaToNv21FBO.release();
+            rgbaToNv21FBO = null;
+        }
+        mFrameId = 0;
     }
 
     public void onPause(Activity activity) {
@@ -317,19 +326,19 @@ public class KwTrackerWrapper {
         //解开绑定
 //        GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, 0);
 
-        if (mFrameId % 2 == 1) {//两帧渲染一次，降低功耗，如果不需要可以去除
-            int filterTexId = mTrackerManager.onDrawOESTexture(texId, texWidth, texHeight, 1);
-            if (filterTexId != -1) {
-                newTexId = filterTexId;
-            } else {
-                newTexId = texId;
-            }
-
-            int error = GLES20.glGetError();//请勿删除当前行获取opengl错误代码
-            if (error != GLES20.GL_NO_ERROR) {
-                Log.d("Tracker", "glError:" + error);
-            }
+//        if (mFrameId % 2 == 1) {//两帧渲染一次，降低功耗，如果不需要可以去除
+        int filterTexId = mTrackerManager.onDrawOESTexture(texId, texWidth, texHeight, 1);
+        if (filterTexId != -1) {
+            newTexId = filterTexId;
+        } else {
+            newTexId = texId;
         }
+
+        int error = GLES20.glGetError();//请勿删除当前行获取opengl错误代码
+        if (error != GLES20.GL_NO_ERROR) {
+            Log.d("Tracker", "glError:" + error);
+        }
+//        }
 
         if (isDebug)
             Log.i(TAG, "[end][succ]onDrawFrame,cost:" + (System.currentTimeMillis() - start) + ",in:" + texId + ",out:" + newTexId);

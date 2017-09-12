@@ -37,24 +37,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ExtCapStreamingActivity"
+        <activity android:name=".activity.conference.ConferenceEntryActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".activity.streaming.RTCStreamingEntryActivity"
+                  android:screenOrientation="portrait" />
+        <activity android:name=".activity.streaming.ExtCapStreamingActivity"
             android:theme="@style/AppThemeFullscreen"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.CapStreamingActivity"
+        <activity android:name=".activity.streaming.RTCStreamingActivity"
             android:theme="@style/AppThemeFullscreen"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.PlaybackActivity"
+        <activity android:name=".activity.playback.PlaybackActivity"
             android:theme="@style/AppThemeFullscreen"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.CapAudioStreamingActivity"
+        <activity android:name=".activity.streaming.RTCAudioStreamingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeFullscreen" />
-        <activity android:name=".activity.PKAnchorActivity"
+        <activity android:name=".activity.streaming.PKAnchorActivity"
             android:theme="@style/AppThemeFullscreen"
             android:screenOrientation="landscape" />
-        <activity android:name=".activity.PKViceAnchorActivity"
+        <activity android:name=".activity.streaming.PKViceAnchorActivity"
             android:theme="@style/AppThemeFullscreen"
             android:screenOrientation="landscape" />
+        <activity android:name=".activity.conference.ConferenceActivity"
+                  android:theme="@style/AppThemeFullscreen"
+                  android:screenOrientation="portrait" />
     </application>
 
 </manifest>
