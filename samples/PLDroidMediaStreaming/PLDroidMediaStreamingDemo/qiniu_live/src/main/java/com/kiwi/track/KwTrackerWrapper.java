@@ -99,6 +99,10 @@ public class KwTrackerWrapper {
         Log.i("tracker", "onDestroy");
         mTrackerManager.onDestory(activity);
     }
+    
+    public void switchCamera(int ordinal) {
+        mTrackerManager.switchCamera(ordinal);
+    }
 
     public OnViewEventListener initUIEventListener(final Runnable switchCamearRunnable) {
         OnViewEventListener eventListener = new OnViewEventListener() {

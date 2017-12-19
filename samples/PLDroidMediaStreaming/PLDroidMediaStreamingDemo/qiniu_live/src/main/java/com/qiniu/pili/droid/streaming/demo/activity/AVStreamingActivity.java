@@ -227,6 +227,7 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
             }
             Log.i(TAG, "switchCamera:" + facingId);
             mMediaStreamingManager.switchCamera(facingId);
+            qiniuLiveTrackerWrapper.switchCamera(facingId.ordinal());
         }
     }
 
