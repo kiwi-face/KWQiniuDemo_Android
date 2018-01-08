@@ -472,6 +472,11 @@ public class ExtCapStreamingActivity extends AppCompatActivity {
         public Camera.Size onPreviewSizeSelected(List<Camera.Size> list) {
             return null;
         }
+
+        @Override
+        public int onPreviewFpsSelected(List<int[]> list) {
+            return -1;
+        }
     };
 
     private Handler mHandler = new Handler(Looper.getMainLooper()) {

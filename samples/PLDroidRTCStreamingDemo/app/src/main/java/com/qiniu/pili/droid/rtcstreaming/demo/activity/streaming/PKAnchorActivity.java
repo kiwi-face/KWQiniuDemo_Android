@@ -497,6 +497,11 @@ public class PKAnchorActivity extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        public int onPreviewFpsSelected(List<int[]> list) {
+            return -1;
+        }
     };
 
     private Handler mHandler = new Handler(Looper.getMainLooper()) {

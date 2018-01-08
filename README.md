@@ -19,8 +19,12 @@ Kiwi人脸跟踪及特效（贴纸、美颜、滤镜、哈哈镜）在七牛SDK�
 
 ## 四. 反馈与建议
 
-- Issues: [https://github.com/kiwi-face/KWQiniuDemo_Android/issues](https://github.com/kiwi-face/KWQiniuDemo_Android/issues)
+- Issues: [https://github.com/kiwi-face/KWQiniuDemo_Android/issues](https://github.com/kiwi-face/KWQiniuDemo_Android/issues)  
 
+## 五. 版本
+- PLDroidRTCStreamingDemo  
+  七牛:pldroid-rtc-streaming-1.2.3  
+  KIWI:2.1.5
 
 
 

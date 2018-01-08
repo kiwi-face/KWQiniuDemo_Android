@@ -277,6 +277,11 @@ public class PKViceAnchorActivity extends AppCompatActivity {
             }
             return null;
         }
+
+        @Override
+        public int onPreviewFpsSelected(List<int[]> list) {
+            return -1;
+        }
     };
 
     private RTCConferenceStateChangedListener mRTCStreamingStateChangedListener = new RTCConferenceStateChangedListener() {

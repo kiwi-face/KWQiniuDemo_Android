@@ -25,7 +25,7 @@ public class StreamUtils {
     // 这里原本填写的是七牛的测试业务服务器，现在需要改写为客户自己的业务服务器
     // 例如：http://www.xxx.com/api/
     public static String getAppServerAddr() {
-        return "";
+        return "http://www.xxx.com/api/";
     }
 
     // 为了 Demo 的演示方便，建议服务器提供一个获取固定推流地址的链接

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.blankj.utilcode.utils.LogUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.kiwi.filter.utils.TextureUtils;
 import com.kiwi.ui.KwControlView;
 import com.qiniu.pili.droid.rtcstreaming.RTCAudioInfo;
 import com.qiniu.pili.droid.rtcstreaming.RTCAudioLevelCallback;
@@ -141,7 +142,7 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
     public int onDrawFrame(int texId, int texWidth, int texHeight, float[] transformMatrix) {
 
         LogUtils.e(TAG, texWidth + "----" + texHeight);
-        int newTexId = kwTrackerWrapper.onDrawFrame(texId, texWidth, texHeight);
+        int newTexId = kwTrackerWrapper.drawOESTexture(texId, texWidth, texHeight);
 
         if (data == null) {
             data = new byte[texWidth * texHeight * 3 / 2];
@@ -382,15 +383,21 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
         kwTrackerWrapper.onCreate(this);
 
         kwControlView = (KwControlView) findViewById(R.id.camera_control_view);
-        kwControlView.setOnEventListener(kwTrackerWrapper.initUIEventListener(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        onClickSwitchCamera(null);
-                    }
-                })
+        kwControlView.setOnEventListener(kwTrackerWrapper.initUIEventListener(new KwTrackerWrapper.UIClickListener() {
+            @Override
+            public void onTakeShutter() {
 
-        );
+            }
+
+            @Override
+            public void onSwitchCamera() {
+
+            }
+        }));
+
+//        TextureUtils.setIsXYRotate(true);
+        TextureUtils.setDir(TextureUtils.DIR_180);
+        TextureUtils.setInverted(true);
     }
 
     @Override
@@ -487,7 +494,15 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
         Log.i(TAG, "switchCamera:" + facingId);
         mRTCStreamingManager.switchCamera(facingId);
 
+        //切换摄像头KWI配置
         kwTrackerWrapper.switchCamera(facingId.ordinal());
+        if(kwTrackerWrapper.getCameraId() == 1) {
+            TextureUtils.setDir(TextureUtils.DIR_270);
+            TextureUtils.setInverted(true);
+        } else {
+            TextureUtils.setDir(TextureUtils.DIR_90);
+            TextureUtils.setInverted(false);
+        }
 
         int length = (int) (data.length / 1.5f);
         byte[] b = new byte[data.length];
@@ -830,6 +845,11 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
                 }
             }
             return null;
+        }
+
+        @Override
+        public int onPreviewFpsSelected(List<int[]> list) {
+            return -1;
         }
     };
 

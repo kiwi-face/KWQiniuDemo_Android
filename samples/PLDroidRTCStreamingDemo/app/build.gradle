@@ -34,18 +34,19 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25+'
-    compile 'com.qiniu:happy-dns:0.2.8'
-    compile files('libs/pldroid-player-1.5.1.jar')
-    compile files('libs/pldroid-rtc-streaming-1.2.0.jar')
-    compile 'com.android.support:multidex:1.0.1'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
+    compile 'com.android.support:appcompat-v7:25+'
+
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.robbypond:material-dialogs:1.0.0'
     compile 'com.github.angads25:filepicker:1.0.6'
+    compile 'com.qiniu:happy-dns:0.2.8'
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile files('libs/pldroid-player-1.5.1.jar')
+    compile files('libs/pldroid-rtc-streaming-1.2.3.jar')
 
     compile project(':ui')
-
 }
