@@ -115,11 +115,6 @@ public class KwTrackerWrapper {
 
     public void onResume(Activity activity) {
         mTrackerManager.onResume(activity);
-
-        if (rgbaToNv21FBO != null) {
-            rgbaToNv21FBO.release();
-            rgbaToNv21FBO = null;
-        }
     }
 
     public void onPause(Activity activity) {
@@ -148,6 +143,11 @@ public class KwTrackerWrapper {
     public void switchCamera(int ordinal) {
         mTrackerManager.switchCamera(ordinal);
         mCameraId = ordinal;
+
+        if (rgbaToNv21FBO != null) {
+            rgbaToNv21FBO.release();
+            rgbaToNv21FBO = null;
+        }
     }
 
     public int getCameraId() {

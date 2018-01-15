@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.kiwi.filter.utils.TextureUtils;
 import com.kiwi.track.KwTrackerWrapper;
 import com.kiwi.ui.KwControlView;
 import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
@@ -79,6 +80,7 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
 
     private MediaStreamingManager mMediaStreamingManager;
 
+    //TODO kiwi滤镜主类，使用其相关引用
     private KwTrackerWrapper qiniuLiveTrackerWrapper;
     private KwControlView kwControlView;
 
@@ -86,26 +88,30 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //TODO 初始化kiwi
         initKiwi();
-
         mMediaStreamingManager.setStreamingPreviewCallback(this);
     }
 
     private void initKiwi() {
-
         qiniuLiveTrackerWrapper = new KwTrackerWrapper(this, mCameraStreamingSetting.getCameraFacingId().ordinal());
         qiniuLiveTrackerWrapper.onCreate(this);
 
         kwControlView = (KwControlView) findViewById(R.id.camera_control_view);
-        kwControlView.setOnEventListener(qiniuLiveTrackerWrapper.initUIEventListener(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        switchCamera();
-                    }
-                })
+        kwControlView.setOnEventListener(qiniuLiveTrackerWrapper.initUIEventListener(new KwTrackerWrapper.UIClickListener() {
+            @Override
+            public void onTakeShutter() {
 
-        );
+            }
+
+            @Override
+            public void onSwitchCamera() {
+
+            }
+        }));
+
+        TextureUtils.setDir(TextureUtils.DIR_180);
+        TextureUtils.setInverted(true);
     }
 
     private void switchCamera() {
@@ -225,9 +231,19 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
             } else {
                 facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
             }
+
             Log.i(TAG, "switchCamera:" + facingId);
             mMediaStreamingManager.switchCamera(facingId);
+
+            //TODO 切换摄像头操作
             qiniuLiveTrackerWrapper.switchCamera(facingId.ordinal());
+            if(qiniuLiveTrackerWrapper.getCameraId() == 1) {
+                TextureUtils.setDir(TextureUtils.DIR_270);
+                TextureUtils.setInverted(true);
+            } else {
+                TextureUtils.setDir(TextureUtils.DIR_90);
+                TextureUtils.setInverted(false);
+            }
         }
     }
 
@@ -661,12 +677,15 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
          * When using custom beauty algorithm, you should return a new texId from the SurfaceTexture.
          * newTexId should not equal with texId, Otherwise, there is no filter effect.
          */
-        int newTexId = qiniuLiveTrackerWrapper.onDrawFrame(texId, texWidth, texHeight);
+
+        //TODO kiwi 滤镜核心处理类，是视频帧进行二次处理
+        int newTexId = qiniuLiveTrackerWrapper.drawOESTexture(texId, texWidth, texHeight);
 
         if (data == null) {
             data = new byte[texWidth * texHeight * 3 / 2];
         }
 
+        //TODO 从处理后的纹理中，读取byte[]数据，用于推流
         qiniuLiveTrackerWrapper.textureToNv21(cameraPreviewFrameView.getContext(), newTexId, texWidth, texHeight, data);
         return newTexId;
     }

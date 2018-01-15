@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.qiniu.pili.droid.streaming.MediaStreamingManager;
 import com.qiniu.pili.droid.streaming.demo.R;
 
+import java.util.List;
+
 public class AudioStreamingActivity extends StreamingBaseActivity {
 
     private MediaStreamingManager mMediaStreamingManager;
@@ -58,4 +60,6 @@ public class AudioStreamingActivity extends StreamingBaseActivity {
     protected boolean stopStreaming() {
         return mMediaStreamingManager.stopStreaming();
     }
+
+
 }

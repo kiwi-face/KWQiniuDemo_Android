@@ -25,6 +25,10 @@ Kiwi人脸跟踪及特效（贴纸、美颜、滤镜、哈哈镜）在七牛SDK�
 - PLDroidRTCStreamingDemo  
   七牛:pldroid-rtc-streaming-1.2.3  
   KIWI:2.1.5
+- PLDroidMediaStreaming  
+  七牛：pldroid-media-streaming-2.2.6  
+  KIWI:2.1.5
+- PLDroidShortVideoDemo
 
 
 

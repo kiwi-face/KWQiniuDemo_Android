@@ -370,4 +370,9 @@ public abstract class StreamingBaseActivity extends Activity implements
         }
         return new DnsManager(NetworkInfo.normal, new IResolver[]{r0, r1, r2});
     }
+
+    @Override
+    public int onPreviewFpsSelected(List<int[]> list) {
+        return -1;
+    }
 }

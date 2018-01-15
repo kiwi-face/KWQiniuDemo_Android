@@ -13,6 +13,6 @@ public class StreamingApplication extends Application {
          * init must be called before any other func
          */
         StreamingEnv.init(getApplicationContext());
-        LeakCanary.install(this);
+        //LeakCanary.install(this);
     }
 }

@@ -52,19 +52,19 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.github.angads25:filepicker:1.0.6'
-    compile 'com.qiniu:happy-dns:0.2.8'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile files('libs/pldroid-media-streaming-2.2.0.jar')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+
     compile 'com.tencent.bugly:crashreport:2.3.1'
     compile 'com.tencent.bugly:nativecrashreport:3.0'
     //其中latest.release指代最新Bugly NDK版本
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v2.6.1'
-    compile project(':ui')
-
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.angads25:filepicker:1.0.6'
+    compile 'com.qiniu:happy-dns:0.2.8'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+
+    compile project(':ui')
 }
