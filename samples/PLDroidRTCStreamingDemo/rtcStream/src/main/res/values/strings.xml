@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">七牛连麦 Demo</string>
+    <string name="app_name">RtcStreamDemo</string>
 
     <string name="failed_to_start_streaming">无法成功开启直播 ！</string>
     <string name="failed_to_start_conference">无法成功开启连麦，错误码：</string>

@@ -1,1 +1,1 @@
-include ':qiniu_live', ':ui'
+include ':mediaStream', ':ui'

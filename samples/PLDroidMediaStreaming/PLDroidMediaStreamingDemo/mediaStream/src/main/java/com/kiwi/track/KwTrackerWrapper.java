@@ -155,7 +155,7 @@ public class KwTrackerWrapper {
         int dir = Accelerometer.getDirection();
 
         dir = dir + 1;
-        dir = dir % 3;
+        dir = dir % 4;
 
         if(mCameraId == 1) {
             switch (dir) {

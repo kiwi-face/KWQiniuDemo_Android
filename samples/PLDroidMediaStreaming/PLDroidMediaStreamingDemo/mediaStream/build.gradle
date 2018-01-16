@@ -1,17 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'bugly'
-
-bugly {
-    appId = "32c53e1250"
-    appKey = "f9db509f-5ed5-41d1-b0bc-2fcabee5b29b"
-}
-
-repositories {
-    flatDir {
-        dirs '../libs'
-    }
-}
-
 
 android {
     compileSdkVersion 25
@@ -50,6 +37,12 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs '../libs'
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
@@ -58,7 +51,6 @@ dependencies {
 
     compile 'com.tencent.bugly:crashreport:2.3.1'
     compile 'com.tencent.bugly:nativecrashreport:3.0'
-    //其中latest.release指代最新Bugly NDK版本
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v2.6.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.angads25:filepicker:1.0.6'
