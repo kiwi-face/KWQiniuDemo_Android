@@ -1,11 +1,5 @@
 apply plugin: 'com.android.application'
 
-repositories {
-    flatDir {
-        dirs '../libs'
-    }
-}
-
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
@@ -24,6 +18,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs '../libs'
     }
 }
 

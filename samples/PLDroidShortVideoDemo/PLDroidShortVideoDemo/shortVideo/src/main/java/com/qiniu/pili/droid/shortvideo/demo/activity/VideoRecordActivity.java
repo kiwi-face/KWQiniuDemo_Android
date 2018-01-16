@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.kiwi.filter.utils.TextureUtils;
 import com.kiwi.ui.KwControlView;
 import com.kiwi.ui.model.StickerConfigMgr;
 import com.qiniu.pili.droid.shortvideo.PLAudioEncodeSetting;
@@ -125,7 +126,7 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
             @Override
             public int onDrawFrame(int texId, int texWidth, int texHeight, long l) {
 //        int ret = texId;
-                int ret = qiniuLiveTrackerWrapper.onDrawFrame(texId, texWidth, texHeight);
+                int ret = qiniuLiveTrackerWrapper.drawOESTexture(texId, texWidth, texHeight);
                 Log.e("tracker", "onDrawFrame,in:" + texId + ",out:" + ret + ",w:" + texWidth + ",h:" + texHeight);
                 return ret;
             }
@@ -166,12 +167,20 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
         qiniuLiveTrackerWrapper.onCreate(this);
 
         kwControlView = (KwControlView) findViewById(R.id.camera_control_view);
-        kwControlView.setOnEventListener(qiniuLiveTrackerWrapper.initUIEventListener(new Runnable() {
+        kwControlView.setOnEventListener(qiniuLiveTrackerWrapper.initUIEventListener(new QiniuLiveTrackerWrapper.UIClickListener() {
             @Override
-            public void run() {
-                onClickSwitchCamera(null);
+            public void onTakeShutter() {
+
+            }
+
+            @Override
+            public void onSwitchCamera() {
+
             }
         }));
+
+        TextureUtils.setDir(TextureUtils.DIR_270);
+        TextureUtils.setInverted(true);
     }
 
     @Override
@@ -213,7 +222,15 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
     public void onClickSwitchCamera(View v) {
         mShortVideoRecorder.switchCamera();
 
+        //TODO 切换摄像头操作
         qiniuLiveTrackerWrapper.switchCamera(cameraSetting.getCameraId());
+        if(qiniuLiveTrackerWrapper.getCameraId() == 1) {
+            TextureUtils.setDir(TextureUtils.DIR_270);
+            TextureUtils.setInverted(true);
+        } else {
+            TextureUtils.setDir(TextureUtils.DIR_90);
+            TextureUtils.setInverted(false);
+        }
     }
 
     public void onClickSwitchFlash(View v) {
