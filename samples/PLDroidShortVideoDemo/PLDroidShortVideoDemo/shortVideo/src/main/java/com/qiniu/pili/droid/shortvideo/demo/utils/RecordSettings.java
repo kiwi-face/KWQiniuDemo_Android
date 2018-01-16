@@ -5,15 +5,19 @@ import com.qiniu.pili.droid.shortvideo.PLVideoEncodeSetting;
 
 public class RecordSettings {
 
-    public static final int DEFAULT_MIN_RECORD_DURATION = 3 * 1000;
-    public static final int DEFAULT_MAX_RECORD_DURATION = 10 * 1000;
+    public static final long DEFAULT_MIN_RECORD_DURATION = 3 * 1000;
+    public static final long DEFAULT_MAX_RECORD_DURATION = 10 * 1000;
 
     public static final String[] PREVIEW_SIZE_RATIO_TIPS_ARRAY = {
             "4:3", "16:9"
     };
 
+    public static final String[] ENCODING_MODE_LEVEL_TIPS_ARRAY = {
+            "HW",
+            "SW"
+    };
+
     public static final String[] PREVIEW_SIZE_LEVEL_TIPS_ARRAY = {
-            "120P",
             "240P",
             "360P",
             "480P",
@@ -24,11 +28,8 @@ public class RecordSettings {
     };
 
     public static final String[] ENCODING_SIZE_LEVEL_TIPS_ARRAY = {
-            "120x120",
-            "160x120",
             "240x240",
             "320x240",
-            "424x240",
             "352x352",
             "640x352",
             "360x360",
@@ -47,13 +48,22 @@ public class RecordSettings {
     };
 
     public static final String[] ENCODING_BITRATE_LEVEL_TIPS_ARRAY = {
-            "500Kpbs",
-            "800Kpbs",
-            "1000Kpbs",
-            "1200Kpbs",
-            "1600Kpbs",
+            "500Kbps",
+            "800Kbps",
+            "1000Kbps",
+            "1200Kbps",
+            "1600Kbps",
             "2000Kbps",
-            "2500Kpbs"
+            "2500Kbps",
+            "4000Kbps",
+            "8000Kbps"
+    };
+
+    public static final String[] ROTATION_LEVEL_TIPS_ARRAY = {
+            "0（可用作去除视频旋转信息）",
+            "90",
+            "180",
+            "270"
     };
 
     public static final PLCameraSetting.CAMERA_PREVIEW_SIZE_RATIO[] PREVIEW_SIZE_RATIO_ARRAY = {
@@ -62,7 +72,6 @@ public class RecordSettings {
     };
 
     public static final PLCameraSetting.CAMERA_PREVIEW_SIZE_LEVEL[] PREVIEW_SIZE_LEVEL_ARRAY = {
-            PLCameraSetting.CAMERA_PREVIEW_SIZE_LEVEL.PREVIEW_SIZE_LEVEL_120P,
             PLCameraSetting.CAMERA_PREVIEW_SIZE_LEVEL.PREVIEW_SIZE_LEVEL_240P,
             PLCameraSetting.CAMERA_PREVIEW_SIZE_LEVEL.PREVIEW_SIZE_LEVEL_360P,
             PLCameraSetting.CAMERA_PREVIEW_SIZE_LEVEL.PREVIEW_SIZE_LEVEL_480P,
@@ -74,14 +83,6 @@ public class RecordSettings {
 
     public static final PLVideoEncodeSetting.VIDEO_ENCODING_SIZE_LEVEL[] ENCODING_SIZE_LEVEL_ARRAY = {
             /**
-             * 120x120
-            */
-            PLVideoEncodeSetting.VIDEO_ENCODING_SIZE_LEVEL.VIDEO_ENCODING_SIZE_LEVEL_120P_1,
-            /**
-             * 160x120
-            */
-            PLVideoEncodeSetting.VIDEO_ENCODING_SIZE_LEVEL.VIDEO_ENCODING_SIZE_LEVEL_120P_2,
-            /**
              * 240x240
             */
             PLVideoEncodeSetting.VIDEO_ENCODING_SIZE_LEVEL.VIDEO_ENCODING_SIZE_LEVEL_240P_1,
@@ -89,10 +90,6 @@ public class RecordSettings {
              * 320x240
             */
             PLVideoEncodeSetting.VIDEO_ENCODING_SIZE_LEVEL.VIDEO_ENCODING_SIZE_LEVEL_240P_2,
-            /**
-             * 424x240
-            */
-            PLVideoEncodeSetting.VIDEO_ENCODING_SIZE_LEVEL.VIDEO_ENCODING_SIZE_LEVEL_240P_3,
             /**
              * 352x352
             */
@@ -162,6 +159,24 @@ public class RecordSettings {
         1200 * 1000,
         1600 * 1000,
         2000 * 1000,
-        2500 * 1000
+        2500 * 1000,
+        4000 * 1000,
+        8000 * 1000,
     };
+
+    public static final int[] ROTATION_LEVEL_ARRAY = {
+            0,
+            90,
+            180,
+            270,
+    };
+
+    public static final double[] RECORD_SPEED_ARRAY = {
+        0.25,
+        0.5,
+        1,
+        2,
+        4,
+    };
+
 }

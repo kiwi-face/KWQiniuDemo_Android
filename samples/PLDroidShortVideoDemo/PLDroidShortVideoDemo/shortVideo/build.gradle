@@ -1,17 +1,26 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.qiniu.pili.droid.shortvideo.demo"
         minSdkVersion 18
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0.0"
+        versionCode 13
+        versionName "1.8.0"
         multiDexEnabled true
         buildConfigField "long", "BUILD_TIMESTAMP", System.currentTimeMillis() + "L"
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
     buildTypes {
         release {
@@ -21,19 +30,20 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs '../libs'
-    }
-}
-
 dependencies {
-    compile 'com.android.support:recyclerview-v7:25+'
-    compile 'com.android.support:appcompat-v7:25+'
-    compile files('libs/pldroid-shortvideo-1.0.0.jar')
+    compile 'com.qiniu:qiniu-android-sdk:7.3.10'
+    compile files('libs/pldroid-shortvideo-1.8.0.jar')
+    compile files('libs/pldroid-player-2.0.5.jar')
+    compile files('libs/EasyAR.jar')
+    compile files('libs/EasyAR3D.jar')
+
     compile 'com.android.support:multidex:1.0.1'
-    compile 'com.qiniu:qiniu-android-sdk:7.3.3'
-    compile 'com.github.navasmdc:MaterialDesign:1.5@aar'
+
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
 
     compile project(':ui')
 }
