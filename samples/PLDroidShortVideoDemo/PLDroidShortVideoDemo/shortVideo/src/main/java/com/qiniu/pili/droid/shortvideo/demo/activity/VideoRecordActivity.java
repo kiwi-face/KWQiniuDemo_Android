@@ -230,9 +230,8 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
 
 
             mShortVideoRecorder.setVideoFilterListener(new PLVideoFilterListener() {
-                private int surfaceWidth;
-                private int surfaceHeight;
-                private boolean isTrackerOnSurfaceChangedCalled;
+                private int surfaceWidth, surfaceHeight;
+                private int mTexWidth, mTexHeight;
 
                 @Override
                 public void onSurfaceCreated() {
@@ -252,10 +251,14 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
 
                 @Override
                 public int onDrawFrame(int texId, int texWidth, int texHeight, long timeStampNs, float[] transformMatrix) {
-                    if (!isTrackerOnSurfaceChangedCalled) {
-                        isTrackerOnSurfaceChangedCalled = true;
+
+                    if(mTexWidth == 0 || mTexHeight == 0 || mTexWidth != texWidth || mTexHeight != texHeight){
+                        mTexWidth = texWidth;
+                        mTexHeight = texHeight;
+
                         mKiwiTrackWrapper.onSurfaceChanged(surfaceWidth, surfaceHeight, texWidth, texHeight);
                     }
+
                     return mKiwiTrackWrapper.drawOESTexture(texId, texWidth, texHeight);
                 }
             });
@@ -398,19 +401,13 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
     }
 
     public void onClickSwitchCamera(View v) {
+        mShortVideoRecorder.switchCamera();
+        mFocusIndicator.focusCancel();
+
         if (mKiwiTrackWrapper != null) {
             //TODO 切换摄像头操作
             mKiwiTrackWrapper.switchCamera(mCameraSetting.getCameraId().ordinal());
-            if(mKiwiTrackWrapper.getCameraId() == 1) {
-                TextureUtils.setDir(TextureUtils.DIR_270);
-                TextureUtils.setInverted(true);
-            } else {
-                TextureUtils.setDir(TextureUtils.DIR_90);
-                TextureUtils.setInverted(false);
-            }
         }
-        mShortVideoRecorder.switchCamera();
-        mFocusIndicator.focusCancel();
     }
 
     public void onClickSwitchFlash(View v) {
