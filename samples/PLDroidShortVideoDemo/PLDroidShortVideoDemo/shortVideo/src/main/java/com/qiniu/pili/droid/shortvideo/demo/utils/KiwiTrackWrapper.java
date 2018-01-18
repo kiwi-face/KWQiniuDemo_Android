@@ -148,6 +148,9 @@ public class KiwiTrackWrapper {
         dir = dir + 2;
         dir = dir % 4;
 
+        Log.e("dir", dir +"");
+        Log.e("mCameraId", mCameraId +"");
+
         if(mCameraId == 1) {
             switch (dir) {
                 case 0:
@@ -166,13 +169,13 @@ public class KiwiTrackWrapper {
         } else {
             switch (dir) {
                 case 0:
-                    dir = 3;
+                    dir = 1;
                     break;
                 case 1:
                     dir = 0;
                     break;
                 case 2:
-                    dir = 1;
+                    dir = 3;
                     break;
                 case 3:
                     dir = 2;
@@ -210,7 +213,9 @@ public class KiwiTrackWrapper {
         if(rotate && dir != TextureUtils.DIR_0) {
             rotateID = onDrawTexture(oesTextureId,texWidth,texHeight,mFirstDir);
         }
-        int sdkID = mTrackerManager.onDrawTexture2D(rotateID,texWidth,texHeight,1);
+
+        //当前设置的最大人脸数是2，取值范围1-5
+        int sdkID = mTrackerManager.onDrawTexture2D(rotateID,texWidth,texHeight,2);
 
         if(rotate && dir != TextureUtils.DIR_0) {
             sdkID = onDrawTexture(sdkID,texWidth,texHeight,mLastDir);
