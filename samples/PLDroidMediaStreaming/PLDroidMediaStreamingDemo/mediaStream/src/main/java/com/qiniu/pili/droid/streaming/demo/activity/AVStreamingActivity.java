@@ -72,7 +72,7 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
     private boolean mOrientationChanged = false;
     private int mCurrentCamFacingIndex;
 
-    private FBO mFBO = new FBO();
+    //private FBO mFBO = new FBO();
 
     private ScreenShooter mScreenShooter = new ScreenShooter();
     private Switcher mSwitcher = new Switcher();
@@ -641,7 +641,7 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
         /**
          * only used in custom beauty algorithm case
          */
-        mFBO.initialize(this);
+        //mFBO.initialize(this);
 
         Log.i(TAG, "onSurfaceCreated,glerror:" + GLES20.glGetError());
 
@@ -654,7 +654,7 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
         /**
          * only used in custom beauty algorithm case
          */
-        mFBO.updateSurfaceSize(width, height);
+        //mFBO.updateSurfaceSize(width, height);
 
         qiniuLiveTrackerWrapper.onSurfaceChanged(width, height, mCameraStreamingSetting.getCameraPreviewWidth(),
                 mCameraStreamingSetting.getCameraPreviewHeight());
@@ -666,7 +666,7 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
         /**
          * only used in custom beauty algorithm case
          */
-        mFBO.release();
+        //mFBO.release();
 
         qiniuLiveTrackerWrapper.onSurfaceDestroyed();
     }
