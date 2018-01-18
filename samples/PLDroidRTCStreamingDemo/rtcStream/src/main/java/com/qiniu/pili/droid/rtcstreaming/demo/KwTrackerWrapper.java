@@ -138,6 +138,11 @@ public class KwTrackerWrapper {
     public void onSurfaceDestroyed() {
         mTrackerManager.onSurfaceDestroyed();
         mRotateFBO.release();
+
+        if (rgbaToNv21FBO != null) {
+            rgbaToNv21FBO.release();
+            rgbaToNv21FBO = null;
+        }
     }
 
     public void switchCamera(int ordinal) {

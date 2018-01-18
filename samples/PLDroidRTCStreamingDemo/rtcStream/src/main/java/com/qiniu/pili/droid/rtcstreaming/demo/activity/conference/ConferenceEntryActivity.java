@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.qiniu.pili.droid.rtcstreaming.RTCMediaStreamingManager;
 import com.qiniu.pili.droid.rtcstreaming.demo.R;
 import com.qiniu.pili.droid.rtcstreaming.demo.core.StreamUtils;
-import com.squareup.leakcanary.LeakCanary;
 
 public class ConferenceEntryActivity extends AppCompatActivity {
 
@@ -34,7 +33,7 @@ public class ConferenceEntryActivity extends AppCompatActivity {
 
         setTitle(R.string.rtc_only);
 
-        LeakCanary.install(getApplication());
+        //LeakCanary.install(getApplication());
         RTCMediaStreamingManager.init(getApplicationContext());
 
         mCodecRadioGroup = (RadioGroup) findViewById(R.id.CodecRadioGroup);

@@ -34,9 +34,9 @@ repositories {
 }
 
 dependencies {
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
+//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
+//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
+//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
     compile 'com.android.support:appcompat-v7:25+'
 
     compile 'com.getbase:floatingactionbutton:1.10.1'

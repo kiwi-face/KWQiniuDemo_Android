@@ -20,7 +20,6 @@ import com.qiniu.pili.droid.rtcstreaming.RTCMediaStreamingManager;
 import com.qiniu.pili.droid.rtcstreaming.demo.R;
 import com.qiniu.pili.droid.rtcstreaming.demo.activity.playback.PlaybackActivity;
 import com.qiniu.pili.droid.rtcstreaming.demo.core.StreamUtils;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.net.UnknownHostException;
 
@@ -52,7 +51,6 @@ public class RTCStreamingEntryActivity extends AppCompatActivity {
 
         setTitle(R.string.rtc_rtmp);
 
-        LeakCanary.install(getApplication());
         RTCMediaStreamingManager.init(getApplicationContext());
 
         mCaptureRadioGroup = (RadioGroup) findViewById(R.id.CaptureRadioGroup);
