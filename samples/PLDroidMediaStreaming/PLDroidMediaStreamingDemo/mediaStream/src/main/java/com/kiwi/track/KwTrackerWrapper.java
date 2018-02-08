@@ -2,10 +2,12 @@ package com.kiwi.track;
 
 import android.app.Activity;
 import android.content.Context;
+import android.hardware.Camera;
 import android.opengl.GLES20;
 import android.os.Build;
 import android.util.Log;
 
+import com.blankj.utilcode.utils.Utils;
 import com.kiwi.filter.utils.TextureUtils;
 import com.kiwi.tracker.KwFaceTracker;
 import com.kiwi.tracker.KwFilterType;
@@ -18,6 +20,7 @@ import com.kiwi.tracker.common.Config;
 import com.kiwi.tracker.fbo.RgbaToNv21FBO;
 import com.kiwi.tracker.fbo.RotateFBO;
 import com.kiwi.tracker.utils.Accelerometer;
+import com.kiwi.tracker.utils.FTCameraUtils;
 import com.kiwi.tracker.utils.GlUtil;
 import com.kiwi.tracker.utils.TrackerConstant;
 import com.kiwi.ui.OnViewEventListener;
@@ -52,8 +55,12 @@ public class KwTrackerWrapper {
 
     public KwTrackerWrapper(final Context context, int cameraFaceId) {
 
-        SharePreferenceMgr instance = SharePreferenceMgr.getInstance();
+        Utils.init(context);
+        Config.init(context);
+        mCameraId = cameraFaceId % 2;
+        setConfig();
 
+        SharePreferenceMgr instance = SharePreferenceMgr.getInstance();
         KwTrackerSettings.BeautySettings2 beautySettings2 = new KwTrackerSettings.BeautySettings2();
         beautySettings2.setWhiteProgress(instance.getSkinWhite());
         beautySettings2.setDermabrasionProgress(instance.getSkinRemoveBlemishes());
@@ -69,7 +76,7 @@ public class KwTrackerWrapper {
                 setBeautySettings2(beautySettings2).
                 setBeautyFaceEnabled(instance.isLocalBeautyEnabled()).
                 setBeautySettings(beautySettings).
-                setCameraFaceId(cameraFaceId);
+                setCameraFaceId(mCameraId);
 
         mTrackerManager = new KwTrackerManager(context).
                 setTrackerSetting(mTrackerSetting)
@@ -77,9 +84,31 @@ public class KwTrackerWrapper {
 
         //copy assets config/sticker/filter to sdcard
         ResourceHelper.copyResource2SD(context);
-
         initKiwiConfig();
-        mCameraId = cameraFaceId;
+    }
+
+    private void setConfig(){
+        if(mCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT){
+            TextureUtils.setInverted(true);
+        }else {
+            TextureUtils.setInverted(false);
+        }
+
+        int cameraDegree = FTCameraUtils.getOrientation(Config.getContext(), mCameraId);
+        switch (cameraDegree){
+            case 0:
+                TextureUtils.setDir(TextureUtils.DIR_0);
+                break;
+            case 90:
+                TextureUtils.setDir(TextureUtils.DIR_90);
+                break;
+            case 180:
+                TextureUtils.setDir(TextureUtils.DIR_180);
+                break;
+            case 270:
+                TextureUtils.setDir(TextureUtils.DIR_270);
+                break;
+        }
     }
 
     private void initKiwiConfig() {
@@ -103,7 +132,6 @@ public class KwTrackerWrapper {
         mTrackerManager.onCreate(activity);
         mRotateFBO = new RotateFBO(GLES20.GL_TEXTURE_2D);
         mRotateFBO.onCreate(activity);
-
     }
 
     public void onResume(Activity activity) {
@@ -140,7 +168,8 @@ public class KwTrackerWrapper {
 
     public void switchCamera(int ordinal) {
         mTrackerManager.switchCamera(ordinal);
-        mCameraId = ordinal;
+        mCameraId = ordinal % 2;
+        setConfig();
 
         if (rgbaToNv21FBO != null) {
             rgbaToNv21FBO.release();
@@ -158,8 +187,41 @@ public class KwTrackerWrapper {
      */
     public int computeFaceDir() {
         int dir = Accelerometer.getDirection();
+        int cameraDegree = FTCameraUtils.getOrientation(Config.getContext(), mCameraId);
+        if(mCameraId == Camera.CameraInfo.CAMERA_FACING_FRONT){
+            switch (cameraDegree){
+                case 0:
+                    dir = dir + 2;
+                    break;
+                case 90:
+                    dir = dir + 3;
+                    break;
+                case 180:
 
-        dir = dir + 1;
+                    break;
+                case 270:
+                    dir = dir + 1;
+                    break;
+
+            }
+        }else {
+            switch (cameraDegree){
+                case 0:
+
+                    break;
+                case 90:
+                    dir = dir + 1;
+                    break;
+                case 180:
+                    dir = dir + 2;
+                    break;
+                case 270:
+                    dir = dir + 3;
+                    break;
+
+            }
+        }
+
         dir = dir % 4;
 
         if(mCameraId == 1) {
@@ -195,6 +257,7 @@ public class KwTrackerWrapper {
         }
         return dir;
     }
+
     /**
      *
      * @param texId 纹理ID，此处的问题是内部TEXTURE_2D纹理
@@ -230,74 +293,6 @@ public class KwTrackerWrapper {
             sdkID = onDrawTexture(sdkID,texWidth,texHeight,mLastDir);
         }
         return sdkID;
-    }
-    /**
-     * 对纹理进行特效处理（美颜、大眼瘦脸、人脸贴纸、哈哈镜、滤镜）
-     * 优点：cpu/内存 占用低，高通/三星 gpu兼容性好
-     * 缺点：该方法对gpu有些要求，早期mali gpu的性能可能导致卡顿
-     *
-     * @param texId     YUV格式纹理
-     * @param texWidth  纹理宽度
-     * @param texHeight 纹理高度
-     * @return 特效处理后的纹理
-     */
-    public int onDrawOESTexture(int texId, int texWidth, int texHeight) {
-
-        //解开绑定
-        int newTexId = texId;
-        int maxFaceCount = 1;
-        int filterTexId = mTrackerManager.onDrawOESTexture(texId, texWidth, texHeight, maxFaceCount);
-        if (filterTexId != -1) {
-            newTexId = filterTexId;
-        }
-        GLES20.glGetError();//请勿删除当前行获取opengl错误代码
-        return newTexId;
-    }
-
-    /**
-     * 对纹理进行特效处理（美颜、大眼瘦脸、人脸贴纸、哈哈镜、滤镜）
-     * 优点：对gpu要求低
-     * 缺点：cpu/内存 占用高
-     *
-     * @param nv21        nv21 preview data
-     * @param texId       external texture id
-     * @param texWidth    texture width
-     * @param texHeight   texture height
-     * @param orientation texture orientation
-     * @return output texture id
-     */
-    public int onDrawOESTexture(byte[] nv21, int texId, int texWidth, int texHeight, int orientation) {
-
-        long start = System.currentTimeMillis();
-
-        //解开绑定
-        int newTexId = texId;
-        int maxFaceCount = 1;
-
-//        //屏幕方向适配
-        int dir = Accelerometer.getDirection();
-        if (((orientation == 270 && (dir & 1) == 1) || (orientation == 90 && (dir & 1) == 0)))
-            dir = (dir ^ 2);
-
-        KwTrackResult kwTrackResult = KwTrackResult.NO_TRACK_RESULT;
-        if (mTrackerSetting.isNeedTrack()) {
-
-            kwTrackResult = mTrackerManager.track(nv21, KwFaceTracker.KW_FORMAT_NV21, texWidth, texHeight, maxFaceCount, dir * 90);
-            if (Config.isDebug) Log.i(TAG, "track cost:" + (System.currentTimeMillis() - start));
-        }
-
-        int filterTexId = mTrackerManager.onDrawOESTexture(texId, texWidth, texHeight, kwTrackResult);
-        if (filterTexId != -1) {
-            newTexId = filterTexId;
-        }
-
-        GLES20.glGetError();//请勿删除当前行获取opengl错误代码
-
-        if (Config.isDebug)
-            Log.i(TAG, "onDrawOESTexture cost:" + (System.currentTimeMillis() - start));
-
-        Log.e("orientation", orientation + "");
-        return newTexId;
     }
 
     /**

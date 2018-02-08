@@ -140,8 +140,6 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
 
     @Override
     public int onDrawFrame(int texId, int texWidth, int texHeight, float[] transformMatrix) {
-
-        LogUtils.e(TAG, texWidth + "----" + texHeight);
         int newTexId = kwTrackerWrapper.drawOESTexture(texId, texWidth, texHeight);
 
         if (data == null) {
@@ -150,7 +148,6 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
 
         kwTrackerWrapper.textureToNv21(mCameraPreviewFrameView.getContext(), newTexId, texWidth, texHeight, data);
         return newTexId;
-
     }
 
     private byte[] data;
@@ -383,21 +380,7 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
         kwTrackerWrapper.onCreate(this);
 
         kwControlView = (KwControlView) findViewById(R.id.camera_control_view);
-        kwControlView.setOnEventListener(kwTrackerWrapper.initUIEventListener(new KwTrackerWrapper.UIClickListener() {
-            @Override
-            public void onTakeShutter() {
-
-            }
-
-            @Override
-            public void onSwitchCamera() {
-
-            }
-        }));
-
-//        TextureUtils.setIsXYRotate(true);
-        TextureUtils.setDir(TextureUtils.DIR_180);
-        TextureUtils.setInverted(true);
+        kwControlView.setOnEventListener(kwTrackerWrapper.initUIEventListener(null));
     }
 
     @Override
@@ -496,13 +479,6 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
 
         //切换摄像头KWI配置
         kwTrackerWrapper.switchCamera(facingId.ordinal());
-        if(kwTrackerWrapper.getCameraId() == 1) {
-            TextureUtils.setDir(TextureUtils.DIR_270);
-            TextureUtils.setInverted(true);
-        } else {
-            TextureUtils.setDir(TextureUtils.DIR_90);
-            TextureUtils.setInverted(false);
-        }
 
         int length = (int) (data.length / 1.5f);
         byte[] b = new byte[data.length];

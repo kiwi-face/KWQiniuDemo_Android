@@ -210,23 +210,10 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
             mKiwiTrackWrapper = new KiwiTrackWrapper(this, mCameraSetting.getCameraId().ordinal());
             mKiwiTrackWrapper.onCreate(this);
 
-            TextureUtils.setDir(TextureUtils.DIR_270);
-            TextureUtils.setInverted(true);
-
             findViewById(R.id.btn_camera_effect).setVisibility(View.VISIBLE);
 
             mControlView = (KwControlView) findViewById(R.id.kiwi_control_layout);
-            mControlView.setOnEventListener(mKiwiTrackWrapper.initUIEventListener(new KiwiTrackWrapper.UIClickListener() {
-                @Override
-                public void onTakeShutter() {
-
-                }
-
-                @Override
-                public void onSwitchCamera() {
-
-                }
-            }));
+            mControlView.setOnEventListener(mKiwiTrackWrapper.initUIEventListener(null));
 
 
             mShortVideoRecorder.setVideoFilterListener(new PLVideoFilterListener() {
@@ -259,7 +246,7 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
                         mKiwiTrackWrapper.onSurfaceChanged(surfaceWidth, surfaceHeight, texWidth, texHeight);
                     }
 
-                    return mKiwiTrackWrapper.drawOESTexture(texId, texWidth, texHeight);
+                    return mKiwiTrackWrapper.drawTexture2D(texId, texWidth, texHeight);
                 }
             });
         }
@@ -406,7 +393,7 @@ public class VideoRecordActivity extends Activity implements PLRecordStateListen
 
         if (mKiwiTrackWrapper != null) {
             //TODO 切换摄像头操作
-            mKiwiTrackWrapper.switchCamera(mCameraSetting.getCameraId().ordinal());
+            mKiwiTrackWrapper.switchCameraShortVideo(mCameraSetting.getCameraId().ordinal());
         }
     }
 

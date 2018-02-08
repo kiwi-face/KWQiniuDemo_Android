@@ -87,7 +87,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //TODO 初始化kiwi
         initKiwi();
         mMediaStreamingManager.setStreamingPreviewCallback(this);
@@ -98,25 +97,7 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
         qiniuLiveTrackerWrapper.onCreate(this);
 
         kwControlView = (KwControlView) findViewById(R.id.camera_control_view);
-        kwControlView.setOnEventListener(qiniuLiveTrackerWrapper.initUIEventListener(new KwTrackerWrapper.UIClickListener() {
-            @Override
-            public void onTakeShutter() {
-
-            }
-
-            @Override
-            public void onSwitchCamera() {
-
-            }
-        }));
-
-        TextureUtils.setDir(TextureUtils.DIR_180);
-        TextureUtils.setInverted(true);
-    }
-
-    private void switchCamera() {
-        mCameraSwitchBtn.removeCallbacks(mSwitcher);
-        mCameraSwitchBtn.postDelayed(mSwitcher, 100);
+        kwControlView.setOnEventListener(qiniuLiveTrackerWrapper.initUIEventListener(null));
     }
 
     @Override
@@ -174,9 +155,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
         mProfile.setPictureStreamingFilePath(mEncodingConfig.mPictureStreamingFilePath);
         MicrophoneStreamingSetting microphoneStreamingSetting = null;
         if (mAudioStereoEnable) {
-            /**
-             * Notice !!! {@link AudioFormat#CHANNEL_IN_STEREO} is NOT guaranteed to work on all devices.
-             */
             microphoneStreamingSetting = new MicrophoneStreamingSetting();
             microphoneStreamingSetting.setChannelConfig(AudioFormat.CHANNEL_IN_STEREO);
         }
@@ -204,7 +182,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
     private class EncodingOrientationSwitcher implements Runnable {
         @Override
         public void run() {
-            Log.i(TAG, "mIsEncOrientationPort:" + mIsEncOrientationPort);
             mOrientationChanged = true;
             mIsEncOrientationPort = !mIsEncOrientationPort;
             mProfile.setEncodingOrientation(mIsEncOrientationPort ? StreamingProfile.ENCODING_ORIENTATION.PORT : StreamingProfile.ENCODING_ORIENTATION.LAND);
@@ -215,7 +192,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
             updateOrientationBtnText();
             Toast.makeText(AVStreamingActivity.this, Config.HINT_ENCODING_ORIENTATION_CHANGED,
                     Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "EncodingOrientationSwitcher -");
         }
     }
 
@@ -232,18 +208,9 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
                 facingId = CameraStreamingSetting.CAMERA_FACING_ID.CAMERA_FACING_3RD;
             }
 
-            Log.i(TAG, "switchCamera:" + facingId);
             mMediaStreamingManager.switchCamera(facingId);
-
             //TODO 切换摄像头操作
             qiniuLiveTrackerWrapper.switchCamera(facingId.ordinal());
-            if(qiniuLiveTrackerWrapper.getCameraId() == 1) {
-                TextureUtils.setDir(TextureUtils.DIR_270);
-                TextureUtils.setInverted(true);
-            } else {
-                TextureUtils.setDir(TextureUtils.DIR_90);
-                TextureUtils.setInverted(false);
-            }
         }
     }
 
@@ -351,10 +318,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
 
     @Override
     public Camera.Size onPreviewSizeSelected(List<Camera.Size> list) {
-        /**
-         * You should choose a suitable size to avoid image scale
-         * eg: If streaming size is 1280 x 720, you should choose a camera preview size >= 1280 x 720
-         */
         Camera.Size size = null;
         if (list != null) {
             StreamingProfile.VideoEncodingSize encodingSize = mProfile.getVideoEncodingSize(mCameraConfig.mSizeRatio);
@@ -514,9 +477,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
 
     @Override
     public void onStateChanged(StreamingState streamingState, Object extra) {
-        /**
-         * general states are handled in the `StreamingBaseActivity`
-         */
         super.onStateChanged(streamingState, extra);
         switch (streamingState) {
             case READY:
@@ -614,7 +574,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
-        Log.i(TAG, "onSingleTapUp X:" + e.getX() + ",Y:" + e.getY());
         if (mIsReady) {
             setFocusAreaIndicator();
             mMediaStreamingManager.doSingleTapUp((int) e.getX(), (int) e.getY());
@@ -629,7 +588,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
             mCurrentZoom = (int) (mMaxZoom * factor);
             mCurrentZoom = Math.min(mCurrentZoom, mMaxZoom);
             mCurrentZoom = Math.max(0, mCurrentZoom);
-            Log.d(TAG, "zoom ongoing, scale: " + mCurrentZoom + ",factor:" + factor + ",maxZoom:" + mMaxZoom);
             mMediaStreamingManager.setZoomValue(mCurrentZoom);
         }
         return false;
@@ -637,47 +595,22 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
 
     @Override
     public void onSurfaceCreated() {
-        Log.i(TAG, "onSurfaceCreated");
-        /**
-         * only used in custom beauty algorithm case
-         */
-        //mFBO.initialize(this);
-
-        Log.i(TAG, "onSurfaceCreated,glerror:" + GLES20.glGetError());
-
         qiniuLiveTrackerWrapper.onSurfaceCreated(this);
     }
 
     @Override
     public void onSurfaceChanged(int width, int height) {
-        Log.i(TAG, "onSurfaceChanged width:" + width + ",height:" + height);
-        /**
-         * only used in custom beauty algorithm case
-         */
-        //mFBO.updateSurfaceSize(width, height);
-
         qiniuLiveTrackerWrapper.onSurfaceChanged(width, height, mCameraStreamingSetting.getCameraPreviewWidth(),
                 mCameraStreamingSetting.getCameraPreviewHeight());
     }
 
     @Override
     public void onSurfaceDestroyed() {
-        Log.i(TAG, "onSurfaceDestroyed");
-        /**
-         * only used in custom beauty algorithm case
-         */
-        //mFBO.release();
-
         qiniuLiveTrackerWrapper.onSurfaceDestroyed();
     }
 
     @Override
     public int onDrawFrame(int texId, int texWidth, int texHeight, float[] transformMatrix) {
-        /**
-         * When using custom beauty algorithm, you should return a new texId from the SurfaceTexture.
-         * newTexId should not equal with texId, Otherwise, there is no filter effect.
-         */
-
         //TODO kiwi 滤镜核心处理类，是视频帧进行二次处理
         int newTexId = qiniuLiveTrackerWrapper.drawOESTexture(texId, texWidth, texHeight);
 
@@ -694,12 +627,6 @@ public class AVStreamingActivity extends StreamingBaseActivity implements
 
     @Override
     public boolean onPreviewFrame(byte[] bytes, int width, int height, int rotation, int fmt, long tsInNanoTime) {
-        Log.i(TAG, "onPreviewFrame " + width + "x" + height + ",fmt:" + (fmt == PLFourCC.FOURCC_I420 ? "I420" : "NV21") + ",ts:" + tsInNanoTime + ",rotation:" + rotation);
-        /**
-         * When using custom beauty algorithm in sw encode mode, you should change the bytes array's values here
-         * eg: byte[] beauties = readPixelsFromGPU();
-         * System.arraycopy(beauties, 0, bytes, 0, bytes.length);
-         */
         if (data != null)
             System.arraycopy(data, 0, bytes, 0, bytes.length);
         return false;
