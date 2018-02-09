@@ -99,7 +99,7 @@ public abstract class StreamingBaseActivity extends Activity implements
         if (inputType == INPUT_TYPE_URL) {
             // publish url
             try {
-                mProfile.setPublishUrl("rtmp://pili-publish.live.zhangrui.qiniuts.com/live-rui/flow-2");
+                mProfile.setPublishUrl(Util.url);
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }

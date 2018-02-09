@@ -27,6 +27,9 @@ import com.kiwi.ui.OnViewEventListener;
 import com.kiwi.ui.helper.ResourceHelper;
 import com.kiwi.ui.model.SharePreferenceMgr;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static com.kiwi.ui.KwControlView.BEAUTY_BIG_EYE_TYPE;
 import static com.kiwi.ui.KwControlView.BEAUTY_THIN_FACE_TYPE;
 import static com.kiwi.ui.KwControlView.REMOVE_BLEMISHES;
@@ -154,6 +157,20 @@ public class KwTrackerWrapper {
     public void onSurfaceChanged(int width, int height, int previewWidth, int previewHeight) {
         mTrackerManager.onSurfaceChanged(width, height, previewWidth, previewHeight);
         mRotateFBO.updateSurfaceSize(width, height);
+
+        //切换完成后，恢复，需要延迟一段时间加载
+//        if (isSwitchCamera) {
+//            TimerTask timerTask = new TimerTask() {
+//                @Override
+//                public void run() {
+//                    mTrackerManager.setBeauty2Enabled(isBeautyOpen);
+//                    mTrackerManager.setBeautyFaceEnabled(isBigEyeOpen);
+//                    mTrackerManager.switchSticker(currentSticker);
+//                    mTrackerManager.switchFilter(currentFilter);
+//                }
+//            };
+//            new Timer().schedule(timerTask, 1000);
+//        }
     }
 
     public void onSurfaceDestroyed() {
@@ -166,6 +183,13 @@ public class KwTrackerWrapper {
         }
     }
 
+    private KwFilter currentFilter;
+    private StickerConfig currentSticker;
+    private boolean isBigEyeOpen;
+    private boolean isBeautyOpen;
+    private boolean isSwitchCamera;
+    private KwFilter filterNull = new KwFilter("nofilter", "nofilter", "inner");
+
     public void switchCamera(int ordinal) {
         mTrackerManager.switchCamera(ordinal);
         mCameraId = ordinal % 2;
@@ -175,6 +199,20 @@ public class KwTrackerWrapper {
             rgbaToNv21FBO.release();
             rgbaToNv21FBO = null;
         }
+
+
+//        //切换摄像头的时候记录
+//        isBigEyeOpen = mTrackerSetting.isBeautyFaceEnabled();
+//        isBeautyOpen = mTrackerSetting.isBeauty2Enabled();
+//        currentFilter = mTrackerSetting.getFilter() == null ? filterNull : mTrackerSetting.getFilter();
+//        currentSticker = mTrackerSetting.getStickerConfig() == null ? StickerConfig.NO_STICKER : mTrackerSetting.getStickerConfig();
+//
+//        //重置
+//        mTrackerManager.setBeauty2Enabled(false);
+//        mTrackerManager.setBeautyFaceEnabled(false);
+//        mTrackerManager.switchSticker(StickerConfig.NO_STICKER);
+//        mTrackerManager.switchFilter(filterNull);
+//        isSwitchCamera = true;
     }
 
     public int getCameraId() {
@@ -311,12 +349,16 @@ public class KwTrackerWrapper {
 
             @Override
             public void onTakeShutter() {
-                uiClickListener.onTakeShutter();
+                if(uiClickListener != null){
+                    uiClickListener.onTakeShutter();
+                }
             }
 
             @Override
             public void onSwitchCamera() {
-                uiClickListener.onSwitchCamera();
+                if(uiClickListener != null){
+                    uiClickListener.onSwitchCamera();
+                }
             }
 
             @Override
@@ -403,15 +445,20 @@ public class KwTrackerWrapper {
             GlUtil.checkGlError("int fbo");
         }
 
-        rgbaToNv21FBO.drawFrame(textureId, w, h);
+        if(rgbaToNv21FBO != null){
+            rgbaToNv21FBO.drawFrame(textureId, w, h);
+        }
 
         //pbo抛弃前两帧
         if (mFrameId++ < 3) {
             return;
         }
-        byte[] bytes = rgbaToNv21FBO.getBytes();
-        int size = outs.length > bytes.length ? bytes.length : outs.length;
-        System.arraycopy(bytes, 0, outs, 0, size);
+
+        if(rgbaToNv21FBO != null){
+            byte[] bytes = rgbaToNv21FBO.getBytes();
+            int size = outs.length > bytes.length ? bytes.length : outs.length;
+            System.arraycopy(bytes, 0, outs, 0, size);
+        }
     }
 
 }

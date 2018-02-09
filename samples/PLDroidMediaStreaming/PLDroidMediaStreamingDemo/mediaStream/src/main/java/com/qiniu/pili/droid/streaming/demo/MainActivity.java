@@ -78,6 +78,8 @@ public class MainActivity extends FragmentActivity {
     }
 
     public void launchStreaming(View v) {
+        Util.url = mInputTextTV.getText().toString().trim();
+
         // API < M, no need to request permissions, so always true.
         boolean isPermissionOK = Build.VERSION.SDK_INT < Build.VERSION_CODES.M || mPermissionChecker.checkPermission();
         if (!isPermissionOK) {

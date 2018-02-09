@@ -12,6 +12,8 @@ import java.util.UUID;
 
 public class StreamUtils {
 
+    public static String url;
+
     public static final boolean IS_USING_STREAMING_JSON = false;
 
     // 区分主播和副主播

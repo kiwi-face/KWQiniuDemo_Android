@@ -103,6 +103,7 @@ public class RTCStreamingEntryActivity extends AppCompatActivity {
         }
         switch (mCaptureRadioGroup.getCheckedRadioButtonId()) {
             case R.id.RadioInnerCap:
+                StreamUtils.url = mRoomEditText.getText().toString().trim();
                 jumpToStreamingActivity(StreamUtils.RTC_ROLE_ANCHOR, RTCStreamingActivity.class);
                 break;
             case R.id.RadioExtCap:
@@ -123,6 +124,7 @@ public class RTCStreamingEntryActivity extends AppCompatActivity {
         }
         switch (mCaptureRadioGroup.getCheckedRadioButtonId()) {
             case R.id.RadioInnerCap:
+                StreamUtils.url = mRoomEditText.getText().toString().trim();
                 jumpToStreamingActivity(StreamUtils.RTC_ROLE_VICE_ANCHOR, RTCStreamingActivity.class);
                 break;
             case R.id.RadioExtCap:
@@ -147,7 +149,7 @@ public class RTCStreamingEntryActivity extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                String playURL = StreamUtils.requestPlayURL(roomName);
+                String playURL = roomName;
                 if (playURL == null) {
                     dismissProgressDialog();
                     showToastTips("无法获取播放地址或者房间信息 !");

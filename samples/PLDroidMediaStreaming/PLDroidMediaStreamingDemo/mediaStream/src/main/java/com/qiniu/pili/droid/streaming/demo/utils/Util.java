@@ -10,6 +10,8 @@ import java.net.URL;
 
 public class Util {
 
+    public static String url;
+
     public static boolean isSupportScreenCapture() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }

@@ -684,7 +684,7 @@ public class RTCStreamingActivity extends AppCompatActivity implements SurfaceTe
             if (StreamUtils.IS_USING_STREAMING_JSON) {
                 mStreamingProfile.setStream(new StreamingProfile.Stream(new JSONObject(publishAddr)));
             } else {
-                mStreamingProfile.setPublishUrl(publishAddr);
+                mStreamingProfile.setPublishUrl(StreamUtils.url);
             }
         } catch (JSONException e) {
             e.printStackTrace();
