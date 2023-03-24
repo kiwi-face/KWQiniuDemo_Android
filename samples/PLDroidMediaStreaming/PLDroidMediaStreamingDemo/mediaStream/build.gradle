@@ -44,19 +44,19 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
-    compile 'com.tencent.bugly:crashreport:2.3.1'
-    compile 'com.tencent.bugly:nativecrashreport:3.0'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v2.6.1'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.github.angads25:filepicker:1.0.6'
-    compile 'com.qiniu:happy-dns:0.2.8'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    implementation 'com.tencent.bugly:crashreport:2.3.1'
+    implementation 'com.tencent.bugly:nativecrashreport:3.0'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.angads25:filepicker:1.0.6'
+    implementation 'com.qiniu:happy-dns:0.2.8'
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.android.support:recyclerview-v7:25.3.1'
 
-    compile project(':ui')
+    implementation project(':ui')
 }

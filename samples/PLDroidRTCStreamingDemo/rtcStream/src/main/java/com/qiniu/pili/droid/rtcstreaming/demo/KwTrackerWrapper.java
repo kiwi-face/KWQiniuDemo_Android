@@ -31,12 +31,7 @@ import com.kiwi.ui.OnViewEventListener;
 import com.kiwi.ui.helper.ResourceHelper;
 import com.kiwi.ui.model.SharePreferenceMgr;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
-import static com.blankj.utilcode.utils.ImageUtils.getBitmap;
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
-import static com.kiwi.tracker.common.Config.isDebug;
 import static com.kiwi.ui.KwControlView.BEAUTY_BIG_EYE_TYPE;
 import static com.kiwi.ui.KwControlView.BEAUTY_THIN_FACE_TYPE;
 import static com.kiwi.ui.KwControlView.REMOVE_BLEMISHES;

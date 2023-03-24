@@ -7,45 +7,45 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+//    buildToolsVersion '25.0.3'
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 215
+        versionName '2.1.5'
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     defaultConfig {
         ndk {
             //设置支持的SO库架构
             abiFilters 'x86', 'armeabi-v7a'
         }
     }
+
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 
-    compile 'com.android.support:appcompat-v7:25+'
-    compile 'com.android.support:recyclerview-v7:25+'
-    compile 'cn.aigestudio.downloader:Downloader:1.4.3'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'cn.aigestudio.downloader:Downloader:1.4.3'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
 
-    compile(name: 'kw-filter', ext: 'aar')
-    compile(name: 'kw-tracker', ext: 'aar')
+    api(name: 'kw-filter', ext: 'aar')
+    api(name: 'kw-tracker', ext: 'aar')
 }

@@ -31,19 +31,19 @@ repositories {
 }
 
 dependencies {
-    compile 'com.qiniu:qiniu-android-sdk:7.3.10'
-    compile files('libs/pldroid-shortvideo-1.8.0.jar')
-    compile files('libs/pldroid-player-2.0.5.jar')
-    compile files('libs/EasyAR.jar')
-    compile files('libs/EasyAR3D.jar')
+    implementation 'com.qiniu:qiniu-android-sdk:7.3.10'
+    implementation files('libs/pldroid-shortvideo-1.8.0.jar')
+    implementation files('libs/pldroid-player-2.0.5.jar')
+    implementation files('libs/EasyAR.jar')
+    implementation files('libs/EasyAR3D.jar')
 
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:multidex:1.0.1'
 
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
-    compile 'com.android.support:recyclerview-v7:26+'
-    compile 'com.android.support:appcompat-v7:26+'
-    compile 'com.android.support:design:26+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+    implementation 'com.android.support:recyclerview-v7:26+'
+    implementation 'com.android.support:appcompat-v7:26+'
+    implementation 'com.android.support:design:26+'
+//    implementation 'com.android.support.constraint:constraint-layout:1.0.1'
 
-    compile project(':ui')
+    implementation project(':ui')
 }

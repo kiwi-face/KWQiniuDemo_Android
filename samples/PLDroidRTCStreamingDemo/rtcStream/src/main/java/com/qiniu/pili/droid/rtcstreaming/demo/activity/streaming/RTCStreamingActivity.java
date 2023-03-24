@@ -25,9 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.blankj.utilcode.utils.LogUtils;
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.kiwi.filter.utils.TextureUtils;
 import com.kiwi.ui.KwControlView;
 import com.qiniu.pili.droid.rtcstreaming.RTCAudioInfo;
 import com.qiniu.pili.droid.rtcstreaming.RTCAudioLevelCallback;
